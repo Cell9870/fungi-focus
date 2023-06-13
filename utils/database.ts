@@ -1,35 +1,14 @@
-import mysql from "mysql2/promise"
+import mysql from "mysql2/promise";
 
-let connection: any
+let connection: Promise<mysql.Connection>;
 
-if (!connection) {
-    connection = mysql.createPool({
-        host: "localhost",
-        user: "root",
-        password: "admin",
-        database: "fungidb",
-        //socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
-    })
+export function connect(): Promise<mysql.Connection> {
+  return mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    port: 3307,
+    password: process.env.DB_PASSWORD,
+    database: "fungidb",
+    //socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
+  });
 }
-
-export {connection as conn}
-
-
-
-
-/*
-import { Pool } from 'pg'
-
-let connection: any
-
-if (!connection) {
-    connection = new Pool({
-        user: 'postgres',
-        password: 'admin',
-        host: 'localhost',
-        port: 5432,
-        database: 'fungidb'
-    })
-}
-
-export { connection as conn }*/
