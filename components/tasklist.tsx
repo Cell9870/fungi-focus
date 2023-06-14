@@ -4,43 +4,28 @@ import { useEffect, useRef, useState } from "react";
 import TaskForm from "./forms/taskform";
 import { useGlobalContext } from "../context/globalstates";
 
+interface ITask {
+    nameTarea: string
+    estado: string
+    descripcion: string
+}
+
+interface IFocusTime {
+    task: number
+    time: number
+    date: string
+}
 
 export default function TasksList() {
-
     const {timerActive} = useGlobalContext()
 
-    const initialTasks = [
-        { name: 'tarea 1', state: 'done', description: '' },
-        { name: 'tarea 2', state: 'pending', description: 'descrip 2' },
-        { name: 'tarea 3', state: 'notStarted', description: 'descrip 3' },
-        { name: 'tarea 4', state: 'done', description: '' }
-    ]
-    const initialFocusTime = [
-        {task: 0, time: 5, date:''},
-        {task: 1, time: 0, date:''},
-        {task: 2, time: 5, date:''},
-        {task: 2, time: 10, date:''},
-        {task: 3, time: 15, date:''},
-        {task: 3, time: 20, date:''},
-    ]
     
-    
-    
-    const [tasks, setTasks] = useState(initialTasks)
-    const [focusTime, setFocusTime] = useState<{task:number,time:number,date:string}[]>([])
+    const [tasks, setTasks] = useState<ITask[]>([])
+    const [focusTime, setFocusTime] = useState<IFocusTime[]>([])
     const [currentTime, setCurrentTime] = useState(Number.parseInt((Date.now()/1000).toFixed()))
     const [activeTask, setActiveTask] = useState(-1)
     const prevTaskRef = useRef<number>(-1)
     const prevTimerRef = useRef<boolean>(false)
-
-    function addTask(name: string, state: string, description?: string) {
-        let newArray = [...tasks]
-        if (description === undefined) description = ''
-        newArray.push({ name, state, description })
-
-        setTasks(newArray)
-        
-    }
 
     function addFocusTime(taskIndex: number) {
         let newArray = [...focusTime]
@@ -51,8 +36,9 @@ export default function TasksList() {
 
         setFocusTime(newArray)
     }
+
     useEffect(() => {
-        //console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}`)
+        console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}`)
         
         //Btn start presionado con una tarea seleccionada: empezar a contar desde ahora.
         if ((timerActive && !prevTimerRef.current) && activeTask != -1 && activeTask === prevTaskRef.current) {
@@ -84,13 +70,36 @@ export default function TasksList() {
     }, [timerActive, activeTask]);
 
 
-    useEffect(() => {
-        //console.log(`tasks: ${tasks.length}`)
-        
-        /*CONSULTAR TAREAS A BASE DE DATOS*/
+    useEffect( () => {
+        getTasksData()
+      }, [])
 
+    async function getTasksData() {
+        const urlEndPoint = `http://localhost:3000/api/tasks`
+        const response = await fetch(urlEndPoint)
+        const res = await response.json()
+        setTasks(res.tasks)
+    }
 
-    }, [setTasks]);
+      async function postTask(nameTarea:string, estado:string, descripcion?:string) {
+        // De momento todas a idUser 1
+        const idUser = 1
+        if (descripcion === undefined) descripcion = ''
+        const urlEndPoint = `http://localhost:3000/api/tasks`
+        const response = await fetch(urlEndPoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nameTarea,
+                estado,
+                descripcion,
+                idUser
+            })
+        })
+        getTasksData()
+    }
 
     return (
 
@@ -112,7 +121,7 @@ export default function TasksList() {
                     className="card-header text-center"
                     style={{border:"1px solid green"}}
                 >
-                    <TaskForm onNewTask={addTask} />
+                    <TaskForm onNewTask={postTask} />
                 </div>
                 <div 
                     className="card-body text-center"
@@ -122,7 +131,7 @@ export default function TasksList() {
                 >
                     <ul className="list-group">
                         {
-                            tasks.map(({ name, state, description }, index) => { 
+                            tasks.map(({ nameTarea, estado, descripcion }, index) => { 
                                 return <li
                                     style={{ textAlign: 'left', border: '1px dotted white ' }}
                                     className={activeTask != index ? 'list-group-item' : 'list-group-item active bg-slate-400'}
@@ -133,7 +142,7 @@ export default function TasksList() {
                                         }
                                     }
                                 >
-                                    {name}, {state}, {description || 'Sin Descripcion'},
+                                    {nameTarea}, {estado}, {descripcion || 'Sin Descripcion'},
                                     {
                                         focusTime.map(({task, time, date}, indexFocus) => {
                                             if (activeTask === index && task === index) {
