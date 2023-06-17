@@ -9,7 +9,6 @@ export default function Navbar() {
     return <div>Loading</div>;
   }
 
-  console.log(session);
   return (
     <div className={styles.navbar}>
       <a href="/">HOME</a>

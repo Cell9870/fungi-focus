@@ -7,7 +7,6 @@ interface CircleTimerProps {
 }
 
 export default function CircleTimer({ myKey, started, duration }: CircleTimerProps) {
-
     function formatTime(remainingTime: number) {
         const hour = Math.floor(remainingTime / 3600)
         const min = Math.floor((remainingTime % 3600) / 60)
