@@ -19,7 +19,7 @@ export default async function handler(
   const [data] = await dbconnection.execute(query, values);
   dbconnection.end();
 
-  res.status(200).json({ results: data });
+    res.status(200).json({ users: data })
 }
 
 /*
