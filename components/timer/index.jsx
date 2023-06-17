@@ -108,6 +108,7 @@ export default function Timer() {
             handleClose={() => setModalOpen(false)}
           >
             <TimerForm
+              durations={durations}
               setDurations={(durations) => {
                 setDurations(durations);
               }}

@@ -13,11 +13,16 @@ type Durations = {
 };
 
 interface TimeFormProps {
+  durations: Durations;
   setDurations: (durations: Durations) => void;
   setOpen: (setOpen: boolean) => void;
 }
 
-export default function TimerForm({ setDurations, setOpen }: TimeFormProps) {
+export default function TimerForm({
+  durations,
+  setDurations,
+  setOpen,
+}: TimeFormProps) {
   function isValidDuration(field: any) {
     return field && isFinite(field) && field > 0;
   }
@@ -67,6 +72,7 @@ export default function TimerForm({ setDurations, setOpen }: TimeFormProps) {
                 label="Pomodoro"
                 autoFocus
                 autoComplete="off"
+                defaultValue={durations.pomodoro}
               />
               <Grid item sx={{ mt: 1, mb: 1 }}></Grid>
               <TextField
@@ -76,6 +82,7 @@ export default function TimerForm({ setDurations, setOpen }: TimeFormProps) {
                 label="Short Break"
                 autoFocus
                 autoComplete="off"
+                defaultValue={durations.shortBreak}
               />
               <Grid item sx={{ mt: 1, mb: 1 }}></Grid>
               <TextField
@@ -85,6 +92,7 @@ export default function TimerForm({ setDurations, setOpen }: TimeFormProps) {
                 label="Long Break"
                 autoFocus
                 autoComplete="off"
+                defaultValue={durations.longBreak}
               />
             </Grid>
           </Grid>
