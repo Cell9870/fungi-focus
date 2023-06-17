@@ -5,7 +5,7 @@ import TaskForm from "./taskform";
 import { useGlobalContext } from "../../context/store";
 
 export default function TasksList() {
-  const { timerActive } = useGlobalContext();
+  const { timerActive, timerState } = useGlobalContext();
 
   const initialTasks = [
     { name: "tarea 1", state: "done", description: "" },
@@ -51,11 +51,12 @@ export default function TasksList() {
     setFocusTime(newArray);
   }
   useEffect(() => {
-    //console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}`)
+    //console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}, Actual: ${timerState.current}`)
 
     //Btn start presionado con una tarea seleccionada: empezar a contar desde ahora.
     if (
-      timerActive &&
+      timerState.current === 'pomodoro' &&
+      timerActive && 
       !prevTimerRef.current &&
       activeTask != -1 &&
       activeTask === prevTaskRef.current
@@ -65,6 +66,7 @@ export default function TasksList() {
     }
     // Btn pause con una tarea seleccionada: añadir tiempo de concentracion
     if (
+      timerState.current === 'pomodoro' && 
       !timerActive &&
       prevTimerRef.current &&
       activeTask != -1 &&
@@ -76,6 +78,7 @@ export default function TasksList() {
 
     //seleccionó otra tarea con el timer activado: guardar tiempo de concentracion a la anterior, y comenzar a contar para la nueva
     if (
+      timerState.current === 'pomodoro' && 
       timerActive &&
       prevTimerRef.current &&
       activeTask != -1 &&
@@ -90,6 +93,7 @@ export default function TasksList() {
     }
     //seleccionó una tarea por primera vez, con el timer activado: empezar a contar desde ahora
     if (
+      timerState.current === 'pomodoro' && 
       timerActive &&
       prevTimerRef.current &&
       activeTask != -1 &&
@@ -100,7 +104,7 @@ export default function TasksList() {
     }
 
     prevTaskRef.current = activeTask;
-    prevTimerRef.current = timerActive;
+    prevTimerRef.current = timerState.current === 'pomodoro' && timerActive;
   }, [timerActive, activeTask]);
 
   useEffect(() => {

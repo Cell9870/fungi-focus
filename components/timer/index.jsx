@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../context/store";
 import React from "react";
 
 export default function Timer() {
-  let { timerActive, setTimerActive } = useGlobalContext();
+  let { timerActive, setTimerActive, timerState, setTimerState } = useGlobalContext();
 
   // Podria ser un parametro mas
   let maxLaps = 4;
@@ -16,27 +16,22 @@ export default function Timer() {
     shortBreak: 5,
     longBreak: 15,
   });
-  const [state, setState] = useState({
-    current: "pomodoro",
-    key: 0,
-    laps: 0,
-  });
   const [modalOpen, setModalOpen] = useState(false);
 
   function setTimer(timerName) {
     setTimerActive(false);
-    setState({
+    setTimerState({
       current: timerName,
-      key: state.key + 1,
+      key: timerState.key + 1,
       laps: 0,
     });
   }
 
   function onComplete() {
     let current;
-    let { laps, key } = state;
+    let { laps, key } = timerState;
 
-    switch (state.current) {
+    switch (timerState.current) {
       case "pomodoro":
         current = "shortbreak";
         if (laps < maxLaps) {
@@ -55,8 +50,7 @@ export default function Timer() {
     }
 
     setTimerActive(false);
-    setState({
-      started: false,
+    setTimerState({
       current: current,
       key: key + 1,
       laps: laps,
@@ -79,8 +73,8 @@ export default function Timer() {
         </div>
         <div className="card-body text-center">
           <CircleTimer
-            myKey={state.key}
-            duration={durations[state.current]} // TODO * 60
+            myKey={timerState.key}
+            duration={durations[timerState.current]} // TODO * 60
             started={timerActive}
             onComplete={onComplete}
           />
@@ -89,10 +83,10 @@ export default function Timer() {
           <button
             onClick={() => {
               setTimerActive(!timerActive);
-              setState({
-                current: state.current,
-                key: state.key,
-                laps: state.laps,
+              setTimerState({
+                current: timerState.current,
+                key: timerState.key,
+                laps: timerState.laps,
               });
             }}
           >
