@@ -1,6 +1,12 @@
-'use client';
+"use client";
 
-import { createContext, useContext, Dispatch, SetStateAction, useState} from 'react'
+import {
+  createContext,
+  useContext,
+  Dispatch,
+  SetStateAction,
+  useState,
+} from "react";
 
 /**
  * AGREGAR AQUÍ LOS STATES QUE QUERAMOS USAR GLOBALMENTE
@@ -8,27 +14,24 @@ import { createContext, useContext, Dispatch, SetStateAction, useState} from 're
  */
 
 interface ContextProps {
-    timerActive: boolean,
-    setTimerActive: Dispatch<SetStateAction<boolean>>,
+  timerActive: boolean;
+  setTimerActive: Dispatch<SetStateAction<boolean>>;
 }
 
 //valores iniciales
 const GlobalContext = createContext<ContextProps>({
-    timerActive: false,
-    setTimerActive: ():boolean => false,
-})
+  timerActive: false,
+  setTimerActive: (): boolean => false,
+});
 
 export const GlobalContextProvider = ({ children }: any) => {
-    const [timerActive, setTimerActive] = useState(false)
-    
-    return (
-        <GlobalContext.Provider
-            value={{timerActive, setTimerActive}}
-        >
-            {children}
-        </GlobalContext.Provider>
-    );
-}
+  const [timerActive, setTimerActive] = useState(false);
 
+  return (
+    <GlobalContext.Provider value={{ timerActive, setTimerActive }}>
+      {children}
+    </GlobalContext.Provider>
+  );
+};
 
-export const useGlobalContext = () => useContext(GlobalContext)
+export const useGlobalContext = () => useContext(GlobalContext);

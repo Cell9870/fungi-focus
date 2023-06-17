@@ -1,20 +1,22 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connect } from "@/utils/database";
 
-import mysql from "mysql2/promise";
+type User = {
+  id: number;
+  username: string;
+  password: string;
+};
+
+export type { User };
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const dbconnection = await connect();
-
   const query = "SELECT * from user";
-  //@ts-ignore
-  const values = [];
-  //@ts-ignore
+  const values: User[] = [];
   const [data] = await dbconnection.execute(query, values);
-
   dbconnection.end();
 
   res.status(200).json({ results: data });

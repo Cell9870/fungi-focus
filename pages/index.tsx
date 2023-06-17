@@ -1,25 +1,20 @@
+"use client";
 import Timer from "@/components/timer";
 import TaskList from "@/components/tasklist";
 import { useEffect, useState } from "react";
-import { dividerClasses } from "@mui/material";
+import { getSession, useSession } from "next-auth/react";
+import { User } from "next-auth";
 
-export default function index() {
-  const [users, setUsers] = useState([]);
+export default function HomePage() {
+  const { data: session, status } = useSession();
 
-  useEffect(() => {
-    async function getUsersData() {
-      const urlEndPoint = `http://localhost:3000/api/users`;
-      const response = await fetch(urlEndPoint);
-      const res = await response.json();
-      console.log(res);
-      setUsers(res.results);
-    }
-    getUsersData();
-  }, []);
+  if (status === "loading") {
+    return <div>Loading</div>;
+  }
 
+  console.log(session);
   return (
     <div>
-      <p>ING WEB PROYECT</p>
       <Timer />
       <TaskList />
     </div>
