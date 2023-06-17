@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import TaskForm from "./taskform";
-import { useGlobalContext } from "../../context/globalstates";
+import { useGlobalContext } from "../../context/store";
 
 export default function TasksList() {
   const { timerActive } = useGlobalContext();
@@ -110,36 +110,36 @@ export default function TasksList() {
 
   return (
     <div className="bg-indigo-950 w-1/2 m-5">
-        <div className="card-header text-center">
-          <TaskForm onNewTask={addTask} />
-        </div>
-        <div className="card-body text-center flex justify-center">
-          <ul className="list-group w-1/2 ">
-            {tasks.map(({ name, state, description }, index) => {
-              return (
-                <li
-                  className={
-                    (activeTask != index)
-                      ? "list-group-item p-1"
-                      : "list-group-item active bg-slate-400 p-1"
+      <div className="card-header text-center">
+        <TaskForm onNewTask={addTask} />
+      </div>
+      <div className="card-body text-center flex justify-center">
+        <ul className="list-group w-1/2 ">
+          {tasks.map(({ name, state, description }, index) => {
+            return (
+              <li
+                className={
+                  activeTask != index
+                    ? "list-group-item p-1"
+                    : "list-group-item active bg-slate-400 p-1"
+                }
+                key={index}
+                onClick={() => {
+                  setActiveTask(index);
+                }}
+              >
+                {name}, {state}, {description || "Sin Descripcion"},
+                {focusTime.map(({ task, time, date }, indexFocus) => {
+                  if (activeTask === index && task === index) {
+                    return `${time}seg+`;
                   }
-                  key={index}
-                  onClick={() => {
-                    setActiveTask(index);
-                  }}
-                >
-                  {name}, {state}, {description || "Sin Descripcion"},
-                  {focusTime.map(({ task, time, date }, indexFocus) => {
-                    if (activeTask === index && task === index) {
-                      return `${time}seg+`;
-                    }
-                    return "";
-                  })}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+                  return "";
+                })}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
