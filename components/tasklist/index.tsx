@@ -4,52 +4,51 @@ import { useEffect, useRef, useState } from "react";
 import TaskForm from "./taskform";
 import { useGlobalContext } from "../../context/store";
 
+interface ITask {
+  id: number
+  nameTarea: string
+  estado: string
+  descripcion: string
+}
+
+interface IFocusTime {
+  id: number
+  concentracionTime: number
+  horaAndFecha: string
+  idUser: number
+  idTarea: number
+}
+
 export default function TasksList() {
   const { timerActive, timerState } = useGlobalContext();
 
-  const initialTasks = [
-    { name: "tarea 1", state: "done", description: "" },
-    { name: "tarea 2", state: "pending", description: "descrip 2" },
-    { name: "tarea 3", state: "notStarted", description: "descrip 3" },
-    { name: "tarea 4", state: "done", description: "" },
-  ];
-  const initialFocusTime = [
-    { task: 0, time: 5, date: "" },
-    { task: 1, time: 0, date: "" },
-    { task: 2, time: 5, date: "" },
-    { task: 2, time: 10, date: "" },
-    { task: 3, time: 15, date: "" },
-    { task: 3, time: 20, date: "" },
-  ];
+  const [tasks, setTasks] = useState<ITask[]>([])
+  const [focusTime, setFocusTime] = useState<IFocusTime[]>([])
+  const [currentTime, setCurrentTime] = useState(Number.parseInt((Date.now()/1000).toFixed()))
+  const [activeTask, setActiveTask] = useState(-1)
+  const prevTaskRef = useRef<number>(-1)
+  const prevTimerRef = useRef<boolean>(false)
 
-  const [tasks, setTasks] = useState(initialTasks);
-  const [focusTime, setFocusTime] = useState<
-    { task: number; time: number; date: string }[]
-  >([]);
-  const [currentTime, setCurrentTime] = useState(
-    Number.parseInt((Date.now() / 1000).toFixed())
-  );
-  const [activeTask, setActiveTask] = useState(-1);
-  const prevTaskRef = useRef<number>(-1);
-  const prevTimerRef = useRef<boolean>(false);
+  function getFocusTimeForTask(id:number) {
+    let resul = 0
+    if (activeTask === id) {
+        focusTime.forEach(({concentracionTime, idTarea}) => {
+            if (idTarea === id)
+                resul += concentracionTime
+        })
 
-  function addTask(name: string, state: string, description?: string) {
-    let newArray = [...tasks];
-    if (description === undefined) description = "";
-    newArray.push({ name, state, description });
+        const hour = Math.floor(resul / 3600)
+        const min = Math.floor((resul % 3600) / 60)
+        const sec = resul % 60
 
-    setTasks(newArray);
+        const strHour = hour ? ((hour < 10 ? "0" : "") + hour + ":") : ""
+        const strMin = min ? ((min < 10 ? "0" : "") + min + ":") : "0:" 
+        return strHour + strMin
+            + (sec < 10 ? "0" : "") + sec
+    } else return ""
   }
 
-  function addFocusTime(taskIndex: number) {
-    let newArray = [...focusTime];
-    let time = Number.parseInt((Date.now() / 1000).toFixed()) - currentTime;
-    let date = new Date().toLocaleString();
-    newArray.push({ task: taskIndex, time, date });
-    console.log(`task: ${taskIndex}, time: ${time}, date: ${date}`);
 
-    setFocusTime(newArray);
-  }
   useEffect(() => {
     //console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}, Actual: ${timerState.current}`)
 
@@ -72,7 +71,7 @@ export default function TasksList() {
       activeTask != -1 &&
       activeTask === prevTaskRef.current
     ) {
-      addFocusTime(activeTask);
+      postFocusTime(activeTask);
       console.log(`pause: añadir para ${activeTask}`);
     }
 
@@ -85,7 +84,7 @@ export default function TasksList() {
       prevTaskRef.current != -1 &&
       activeTask != prevTaskRef.current
     ) {
-      addFocusTime(prevTaskRef.current);
+      postFocusTime(prevTaskRef.current);
       setCurrentTime(Number.parseInt((Date.now() / 1000).toFixed()));
       console.log(
         `seleccionar tarea: añadir a ${prevTaskRef.current} y contar para ${activeTask}`
@@ -107,43 +106,146 @@ export default function TasksList() {
     prevTimerRef.current = timerState.current === 'pomodoro' && timerActive;
   }, [timerActive, activeTask]);
 
-  useEffect(() => {
-    //console.log(`tasks: ${tasks.length}`)
-    /*CONSULTAR TAREAS A BASE DE DATOS*/
-  }, [setTasks]);
+  useEffect( () => {
+    getTasksData()
+  }, [])
+
+  async function getTasksData() {
+    let urlEndPoint = `http://localhost:3000/api/tasks`
+    let response = await fetch(urlEndPoint)
+    let res = await response.json()
+    setTasks(res.tasks)
+
+    urlEndPoint = `http://localhost:3000/api/tasks/focusTimes`
+    response = await fetch(urlEndPoint)
+    res = await response.json()
+    setFocusTime(res.focusTime)
+  }
+
+  async function postFocusTime(idTarea:number) {
+    const idUser = 1
+    const concentracionTime = Number.parseInt((Date.now()/1000).toFixed()) - currentTime
+
+    if (concentracionTime > 4) { // arbitrario, lo podemos cambiar despues (ej 1 minuto minimo)
+        const urlEndPoint = `http://localhost:3000/api/tasks/focusTimes`
+        const response = await fetch(urlEndPoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // id : AutoIncrement
+                concentracionTime,
+                // horaAndFecha : now() en sql
+                idUser, // Por ahora id=1
+                idTarea
+            })
+        }
+        )
+        getTasksData()
+    }
+    else console.log("logitud de concentracion muy corta")
+  }
+
+  async function postTask(nameTarea:string, estado:string, descripcion?:string) {
+    // De momento todas a idUser 1
+    const idUser = 1
+    if (descripcion === undefined) descripcion = ''
+    const urlEndPoint = `http://localhost:3000/api/tasks`
+    const response = await fetch(urlEndPoint, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            // id : AutoIncrement
+            nameTarea,
+            estado,
+            descripcion,
+            idUser // Por ahora id=1
+        })
+    })
+    getTasksData()
+  }
+
+  async function updateTaskState(id:number, state:string) {
+    const urlEndPoint = `http://localhost:3000/api/tasks`
+    const response = await fetch(urlEndPoint, {
+        method: "PATCH", 
+        headers: {
+            "Content-Type": "applications/json"
+        },
+        body: JSON.stringify({
+            id,
+            state
+        })
+    })
+    //getTasksData()
+  }
+
 
   return (
-    <div className="bg-indigo-950 w-1/2 m-5">
-      <div className="card-header text-center">
-        <TaskForm onNewTask={addTask} />
-      </div>
-      <div className="card-body text-center flex justify-center">
-        <ul className="list-group w-1/2 ">
-          {tasks.map(({ name, state, description }, index) => {
-            return (
-              <li
-                className={
-                  activeTask != index
-                    ? "list-group-item p-1"
-                    : "list-group-item active bg-slate-400 p-1"
+    <div className="bg-indigo-950 w-1/2">
+        <div className="card">
+            <div 
+                className="card-body text-center flex flex-col justify-center space-x-10 p-10"
+            >
+                <ul className="list-group " >
+                    {
+                        tasks.map(({ nameTarea, estado, descripcion, id }, index) => { 
+                            return (
+                            <li
+                                style={{ textAlign: 'left' }}
+                                className={activeTask != id ? 'list-group-item' : 'list-group-item active bg-gray-800'}
+                                key={id}
+                                onClick={
+                                    () => {
+                                        setActiveTask(id);
+                                    }
+                                }
+                            >
+                                <dl>
+                                    <dt style={{display:'block', float:'right'}}>
+                                        <small>Nombre de la Tarea</small>
+                                    </dt>
+                                        <dd style={{color:'lime'}}>{nameTarea}</dd>
+                                    <dt style={{display:'block', float:'right'}}>
+                                        <small>Estado</small>
+                                    </dt>
+                                        <dd style={{color:'green'}}>{(estado=='done'?'Finalizada':(estado=='notStarted'?'No empezada':'Pendiente')) }</dd>
+                                    <dt style={{display:'block', float:'right'}}>
+                                        <small>{activeTask==id?'Descripcion':''}</small>
+                                    </dt>
+                                        <dd style={{color:'gray'}}>{activeTask==id?(descripcion || 'Sin Descripcion'):''}</dd>
+                                    <dt style={{display:'block', float:'right'}}>
+                                        <small>{activeTask==id?'Tiempo dedicado':''}</small>
+                                    </dt>
+                                        <dd style={{color:'yellow'}}>{getFocusTimeForTask(id)}</dd>
+                                    <dt style={{display:'block', float:'right', color:'red'}}>
+                                        {(activeTask==id && estado==='pending')?<button onClick={()=>{updateTaskState(id, 'done')}}>Finalizar</button>:''} 
+                                    </dt>
+                                        <dd style={{color:'red'}}>
+                                            {(activeTask==id && estado==='pending')?'-':''}
+                                        </dd>
+                                </dl>
+                                
+                            </li>
+                            )
+                        })
+                    }
+                </ul>
+            </div>
+            <div 
+                className="card-footer text-center"
+                onClick={
+                    () => {
+                        setActiveTask(-1)
+                    }
                 }
-                key={index}
-                onClick={() => {
-                  setActiveTask(index);
-                }}
-              >
-                {name}, {state}, {description || "Sin Descripcion"},
-                {focusTime.map(({ task, time, date }, indexFocus) => {
-                  if (activeTask === index && task === index) {
-                    return `${time}seg+`;
-                  }
-                  return "";
-                })}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+            >
+                <TaskForm onNewTask={postTask} />
+            </div>
+        </div>
     </div>
-  );
+);
 }

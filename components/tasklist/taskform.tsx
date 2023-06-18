@@ -26,12 +26,7 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
     return (
         <Container component='main' maxWidth='xs'>
             <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    padding: '10px',
-                }}>
+                >
                 <Box component='form' onSubmit={handleSubmit(handleFormSubmit)}>
                     <Grid container justifyContent={"left"} rowSpacing={1} columns={3} columnSpacing={2} rowGap={2} columnGap={2}>
                         <Grid item>
@@ -44,18 +39,6 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
                                 autoComplete="off"
                                 variant="standard"
                                 sx={{ input: { color: 'white' }, }}
-                                InputLabelProps={{ style: { color: 'gray' } }}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                {...register('description')}
-                                label="Descripcion"
-                                multiline
-                                rows={3}
-                                autoComplete="off"
-                                variant="standard"
-                                inputProps={{ style: { color: 'white' } }}
                                 InputLabelProps={{ style: { color: 'gray' } }}
                             />
                         </Grid>
@@ -73,14 +56,29 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
                                 <MenuItem value={'done'}>Finalizado</MenuItem>
                             </Select>
                         </Grid>
+                        <Grid item>
+                            <TextField
+                                {...register('description')}
+                                label="Descripcion"
+                                multiline
+                                rows={3}
+                                autoComplete="off"
+                                variant="standard"
+                                inputProps={{ style: { color: 'white' } }}
+                                InputLabelProps={{ style: { color: 'gray' } }}
+                            />
+                        </Grid>
+                        <Grid item>
+                        <Button
+                            type="submit"
+                            sx={{ position: 'relative', left: '5%' }}
+                            variant="contained"
+                        >
+                            Añadir Tarea
+                        </Button>
+                        </Grid>
                     </Grid>
-                    <Button
-                        type="submit"
-                        sx={{ position: 'relative', left: '30%' }}
-                        variant="contained"
-                    >
-                        Añadir Tarea
-                    </Button>
+                    
                 </Box>
             </Box>
         </Container>
