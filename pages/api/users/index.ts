@@ -1,26 +1,26 @@
 import { NextApiRequest, NextApiResponse } from "next";
-//import { conn } from "@/utils/database";
+import { connect } from "@/utils/database";
 
-import mysql from "mysql2/promise"
+type User = {
+  id: number;
+  username: string;
+  password: string;
+};
 
-export default async function handler(req:NextApiRequest, res: NextApiResponse) {
-    const dbconnection = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "admin",
-        database: "fungidb",
-        //socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
-    })
-    const query = "SELECT * from user"
-    //@ts-ignore
-    const values = []
-    //@ts-ignore
-    const [data] = await dbconnection.execute(query, values)
-    dbconnection.end()
+export type { User };
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const dbconnection = await connect();
+  const query = "SELECT * from user";
+  const values: User[] = [];
+  const [data] = await dbconnection.execute(query, values);
+  dbconnection.end();
 
     res.status(200).json({ users: data })
 }
-
 
 /*
 export default async (req:NextApiRequest, res: NextApiResponse) => {

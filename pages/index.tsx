@@ -1,19 +1,12 @@
-import Timer from "@/components/timer"
-import TaskList from "@/components/tasklist"
+"use client";
+import Timer from "@/components/timer";
+import TaskList from "@/components/tasklist";
 
-interface Users {
-  id: number
-  username : string
-  password : string
-}
-
-export default function index() {
-
+export default function HomePage() {
   return (
-    <div>
-      <p>ING WEB PROYECT</p>
-      <Timer/>
-      <TaskList/>
+    <div className="flex flex-col justify-center items-center space-y-2">
+      <Timer />
+      <TaskList />
     </div>
-  )
+  );
 }
