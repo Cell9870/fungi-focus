@@ -4,8 +4,6 @@ import mysql from "mysql2/promise"
 
 export default async function handler(req:NextApiRequest, res: NextApiResponse) {
     const {method, body} = req
-    //console.log(`method:${method}`)
-    //console.log(`body:${body}`)
     const dbconnection = await mysql.createConnection({
         host: "localhost",
         user: "root",
@@ -45,10 +43,11 @@ export default async function handler(req:NextApiRequest, res: NextApiResponse) 
             case "PATCH":
                 try {
                     const {id, state} = body
-                    //console.log("HOLA"+` id:${id}, state:${state}`)
+                    const query = "UPDATE tarea SET estado = ? WHERE (id = ?);"
+                    const values = [state, id]
+                    const [data] = await dbconnection.execute(query, values)
                     
-                    //res.status(201).json({"id":id, "state":state})
-                    throw new Error("FUNCIONALIDAD AUN NO IMPLEMENTADA")
+                    res.status(201).json(data)
                 } catch (error:any) {
                     res.status(500).json({PATCH_ERROR: error.message})
                 }

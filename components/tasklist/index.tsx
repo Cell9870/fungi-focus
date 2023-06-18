@@ -28,6 +28,7 @@ export default function TasksList() {
   const [activeTask, setActiveTask] = useState(-1)
   const prevTaskRef = useRef<number>(-1)
   const prevTimerRef = useRef<boolean>(false)
+  const prevTimerStateRef = useRef<string>('pomodoro')
 
   function getFocusTimeForTask(id:number) {
     let resul = 0
@@ -50,7 +51,7 @@ export default function TasksList() {
 
 
   useEffect(() => {
-    //console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}, Actual: ${timerState.current}`)
+    //console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}, timerState: ${timerState.current}, timerStatePrev ${prevTimerStateRef.current}`)
 
     //Btn start presionado con una tarea seleccionada: empezar a contar desde ahora.
     if (
@@ -60,8 +61,8 @@ export default function TasksList() {
       activeTask != -1 &&
       activeTask === prevTaskRef.current
     ) {
-      setCurrentTime(Number.parseInt((Date.now() / 1000).toFixed()));
-      console.log(`start: contar desde ahora para ${activeTask} `);
+        console.log(`start: contar desde ahora para ${activeTask} `);
+        setCurrentTime(Number.parseInt((Date.now() / 1000).toFixed()));
     }
     // Btn pause con una tarea seleccionada: añadir tiempo de concentracion
     if (
@@ -71,8 +72,8 @@ export default function TasksList() {
       activeTask != -1 &&
       activeTask === prevTaskRef.current
     ) {
-      postFocusTime(activeTask);
-      console.log(`pause: añadir para ${activeTask}`);
+        console.log(`pause: añadir para ${activeTask}`);
+        postFocusTime(activeTask);
     }
 
     //seleccionó otra tarea con el timer activado: guardar tiempo de concentracion a la anterior, y comenzar a contar para la nueva
@@ -84,11 +85,9 @@ export default function TasksList() {
       prevTaskRef.current != -1 &&
       activeTask != prevTaskRef.current
     ) {
-      postFocusTime(prevTaskRef.current);
-      setCurrentTime(Number.parseInt((Date.now() / 1000).toFixed()));
-      console.log(
-        `seleccionar tarea: añadir a ${prevTaskRef.current} y contar para ${activeTask}`
-      );
+        console.log(`seleccionar tarea: añadir a ${prevTaskRef.current} y contar para ${activeTask}`);
+        postFocusTime(prevTaskRef.current);
+        setCurrentTime(Number.parseInt((Date.now() / 1000).toFixed()));
     }
     //seleccionó una tarea por primera vez, con el timer activado: empezar a contar desde ahora
     if (
@@ -98,12 +97,24 @@ export default function TasksList() {
       activeTask != -1 &&
       prevTaskRef.current == -1
     ) {
-      setCurrentTime(Number.parseInt((Date.now() / 1000).toFixed()));
-      console.log(`seleccionar tarea: contar desde ahora para ${activeTask}`);
+        console.log(`seleccionar tarea: contar desde ahora para ${activeTask}`);
+        setCurrentTime(Number.parseInt((Date.now() / 1000).toFixed()));
+    }
+
+    if (
+        timerState.current != 'pomodoro' &&
+        prevTimerStateRef.current === 'pomodoro' &&
+        activeTask != -1 && 
+        !timerActive &&
+        prevTimerRef.current 
+    ) {
+        console.log(`termino o cambio pomodoro: añadir para ${activeTask}`)
+        postFocusTime(activeTask)
     }
 
     prevTaskRef.current = activeTask;
     prevTimerRef.current = timerState.current === 'pomodoro' && timerActive;
+    prevTimerStateRef.current = timerState.current;
   }, [timerActive, activeTask]);
 
   useEffect( () => {
@@ -125,8 +136,12 @@ export default function TasksList() {
   async function postFocusTime(idTarea:number) {
     const idUser = 1
     const concentracionTime = Number.parseInt((Date.now()/1000).toFixed()) - currentTime
+    const task = tasks.filter(task => task.id === idTarea)[0]
+    const minTime = 4 // arbitrario, lo podemos cambiar despues (ej 1 minuto minimo)
 
-    if (concentracionTime > 4) { // arbitrario, lo podemos cambiar despues (ej 1 minuto minimo)
+    
+    if (task.estado != 'done' && concentracionTime > minTime) { 
+        if (task.estado === 'notStarted') updateTaskState(idTarea, 'pending')
         const urlEndPoint = `http://localhost:3000/api/tasks/focusTimes`
         const response = await fetch(urlEndPoint, {
             method: "POST",
@@ -144,7 +159,9 @@ export default function TasksList() {
         )
         getTasksData()
     }
-    else console.log("logitud de concentracion muy corta")
+    else console.log(task.estado === 'done' ?
+        "No se añade porque la tarea está terminada" : 
+        `Tiempo de concentracion por debajo del minimo (${minTime}s)`)
   }
 
   async function postTask(nameTarea:string, estado:string, descripcion?:string) {
@@ -173,14 +190,14 @@ export default function TasksList() {
     const response = await fetch(urlEndPoint, {
         method: "PATCH", 
         headers: {
-            "Content-Type": "applications/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             id,
             state
         })
     })
-    //getTasksData()
+    getTasksData()
   }
 
 
