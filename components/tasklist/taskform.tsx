@@ -7,11 +7,15 @@ interface TaskFormProps {
 }
 
 export default function TaskForm({ onNewTask }: TaskFormProps) {
-    const { register, handleSubmit }: UseFormReturn = useForm();
+    const { register, handleSubmit, reset }: UseFormReturn = useForm();
 
     const [state, setState] = useState('notStarted');
 
     const handleFormSubmit = ({ task, description }: any) => {
+        reset({
+            task: "",
+            description: ""
+        })
         let _name: string = task
         let _state: string = state
         let _description: string = description
@@ -27,8 +31,11 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
         <Container component='main' maxWidth='xs'>
             <Box
                 >
-                <Box component='form' onSubmit={handleSubmit(handleFormSubmit)}>
-                    <Grid container justifyContent={"left"} rowSpacing={1} columns={3} columnSpacing={2} rowGap={2} columnGap={2}>
+                <Box 
+                    component='form' 
+                    onSubmit={handleSubmit(handleFormSubmit)}
+                >
+                    <Grid container justifyContent={"left"} rowSpacing={1} columns={2} columnSpacing={2} rowGap={2} columnGap={2}>
                         <Grid item>
                             <TextField
                                 {...register('task')}
