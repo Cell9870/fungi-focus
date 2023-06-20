@@ -49,7 +49,7 @@ export default function TasksList() {
 
   useEffect(() => {
     getTasksData();
-  }, []);
+  }, [session]);
 
   function getFocusTimeForTask(id: number) {
     let resul = 0;
@@ -161,6 +161,7 @@ export default function TasksList() {
           idTarea,
         }),
       });
+
       getTasksData();
     }
     // else
