@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `fungidb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `fungidb`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: fungidb
@@ -18,7 +20,6 @@
 --
 -- Table structure for table `concentracion`
 --
-
 DROP TABLE IF EXISTS `concentracion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -26,7 +27,7 @@ CREATE TABLE `concentracion` (
   `id` int NOT NULL AUTO_INCREMENT,
   `concentracionTime` int NOT NULL,
   `horaAndFecha` datetime(3) NOT NULL,
-  `idUser` int NOT NULL,
+  `idUser` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `idTarea` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Concentracion_idUser_fkey` (`idUser`),
@@ -56,7 +57,7 @@ CREATE TABLE `descanso` (
   `id` int NOT NULL AUTO_INCREMENT,
   `descansoTime` int NOT NULL,
   `horaAndFecha` datetime(3) NOT NULL,
-  `idUser` int NOT NULL,
+  `idUser` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Descanso_idUser_fkey` (`idUser`),
   CONSTRAINT `Descanso_idUser_fkey` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -84,7 +85,7 @@ CREATE TABLE `pomodoro` (
   `pomodoroTime` int NOT NULL,
   `shortBreakTime` int NOT NULL,
   `longBreakTime` int NOT NULL,
-  `idUser` int NOT NULL,
+  `idUser` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Pomodoro_idUser_fkey` (`idUser`),
   CONSTRAINT `Pomodoro_idUser_fkey` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -112,7 +113,7 @@ CREATE TABLE `tarea` (
   `nameTarea` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `descripcion` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `estado` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `idUser` int NOT NULL,
+  `idUser` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Tarea_idUser_fkey` (`idUser`),
   CONSTRAINT `Tarea_idUser_fkey` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -137,11 +138,11 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `email` int NOT NULL AUTO_INCREMENT,
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
