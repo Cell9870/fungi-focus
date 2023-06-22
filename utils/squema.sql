@@ -114,6 +114,7 @@ CREATE TABLE `tarea` (
   `descripcion` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `estado` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `idUser` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted` boolean NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Tarea_idUser_fkey` (`idUser`),
   CONSTRAINT `Tarea_idUser_fkey` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -126,7 +127,7 @@ CREATE TABLE `tarea` (
 
 LOCK TABLES `tarea` WRITE;
 /*!40000 ALTER TABLE `tarea` DISABLE KEYS */;
-INSERT INTO `tarea` VALUES (1,'tarea 1','descrip 1','notStarted',1),(2,'tarea 2','','done',1),(3,'tarea 3','descrip 3','pending',1),(4,'tarea 4','','notStarted',1);
+/*INSERT INTO `tarea` VALUES (1,'tarea 1','descrip 1','notStarted',1, "false"),(2,'tarea 2','','done',1, "false"),(3,'tarea 3','descrip 3','pending',1, "false"),(4,'tarea 4','','notStarted',1, "false");*/
 /*!40000 ALTER TABLE `tarea` ENABLE KEYS */;
 UNLOCK TABLES;
 
