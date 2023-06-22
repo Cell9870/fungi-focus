@@ -46,7 +46,7 @@ export default function TasksList() {
     res = await response.json();
     setFocusTime(res.focusTime);
   }
-
+  
   useEffect(() => {
     getTasksData();
   }, [session]);
@@ -157,7 +157,7 @@ export default function TasksList() {
           // id : AutoIncrement
           concentracionTime,
           // horaAndFecha : now() en sql
-          idUser, // Por ahora id=1
+          idUser,
           idTarea,
         }),
       });
@@ -177,22 +177,27 @@ export default function TasksList() {
     estado: string,
     descripcion?: string
   ) {
-    if (descripcion === undefined) descripcion = "";
-    const urlEndPoint = `http://localhost:3000/api/tasks`;
-    const response = await fetch(urlEndPoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // id : AutoIncrement
-        nameTarea,
-        estado,
-        descripcion,
-        idUser, // Por ahora id=1
-      }),
-    });
-    getTasksData();
+    if (session != null) {
+      if (descripcion === undefined) descripcion = "";
+      const urlEndPoint = `http://localhost:3000/api/tasks`;
+      const response = await fetch(urlEndPoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          // id : AutoIncrement
+          nameTarea,
+          estado,
+          descripcion,
+          idUser,
+        }),
+      });
+      getTasksData();
+    } 
+    else {
+      alert("Funcionalidad solo para usuarios registrados.")
+    }
   }
 
   async function updateTaskState(id: number, state: string) {
@@ -210,12 +215,24 @@ export default function TasksList() {
     getTasksData();
   }
 
+  async function deleteTask(id: number) {
+    const urlEndPoint = `http://localhost:3000/api/tasks/?id=${id}`;
+    const response = await fetch(urlEndPoint, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    getTasksData();
+  }
+
   return (
     <div className="bg-indigo-950 w-1/2">
       <div className="card">
         <div className="card-body text-center flex flex-col justify-center space-x-10 p-10">
           <ul className="list-group ">
             {tasks.map(({ nameTarea, estado, descripcion, id }, index) => {
+
               return (
                 <li
                   style={{ textAlign: "left" }}
@@ -257,7 +274,7 @@ export default function TasksList() {
                       {getFocusTimeForTask(id)}
                     </dd>
                     <dt
-                      style={{ display: "block", float: "right", color: "red" }}
+                      style={{ display: "block", float: "right", color: "orange" }}
                     >
                       {activeTask == id && estado === "pending" ? (
                         <button
@@ -267,12 +284,26 @@ export default function TasksList() {
                         >
                           Finalizar
                         </button>
-                      ) : (
-                        ""
-                      )}
+                      ) : ("")}
                     </dt>
-                    <dd style={{ color: "red" }}>
+                    <dd style={{ color:"orange" }}>
                       {activeTask == id && estado === "pending" ? "-" : ""}
+                    </dd>
+                    <dt
+                      style={{ display: "block", float: "right", color: "red"}}
+                    >
+                      {activeTask == id ? (
+                        <button
+                          onClick={() => {
+                            deleteTask(id)
+                          }}
+                        >
+                          Eliminar
+                        </button>
+                      ) : ("")}
+                    </dt>
+                    <dd style={{ color:"red" }}>
+                      {activeTask == id ? "-" : ""}
                     </dd>
                   </dl>
                 </li>

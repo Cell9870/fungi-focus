@@ -40,6 +40,16 @@ export default function TimerForm({
     setOpen(false);
   }
 
+  function handleFormReset() {
+    let durations: Durations = {
+      pomodoro: 25*60,
+      shortBreak: 5*60,
+      longBreak: 15*60,
+    };
+    setDurations(durations);
+    setOpen(false);
+  }
+
   return (
     <Container component="main" maxWidth="sm">
       <Box
@@ -61,7 +71,7 @@ export default function TimerForm({
         <Box
           component="form"
           onSubmit={handleSubmit(handleFormSubmit)}
-          onReset={handleSubmit(handleFormSubmit)}
+          onReset={handleSubmit(handleFormReset)}
         >
           <Grid container spacing={2} justifyContent={"center"}>
             <Grid item sx={{ mt: 1, mb: 1 }}>
