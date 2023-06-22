@@ -1,22 +1,27 @@
 import React from "react";
-import styles from "./styles.module.css";
-import Image from "next/image";
-import { signIn } from "next-auth/react";
 
-export default function LogIn() {
+export default function Register() {
   return (
-    <div className="container w-75 mt-5 rounded rounded-2 shadow shadow-lg log-in">
+    <div className="container w-75 mt-5 rounded rounded-2 shadow shadow-lg">
       <div className="row align-items-stretch">
         <div className="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded rounded-2"></div>
         <div className="col bg-white p-5 rounded-end">
           <div>
-            <h3>Bienvenido</h3>
-            <p>
-              Please, log in into our website to see your full statistics and
-              options. Be focus, be fungi!
-            </p>
+            <h3>Crear una cuenta</h3>
+            <p>Please, join to the family. Be focus, be fungi!</p>
           </div>
           <form action="">
+            <div className="mb-2">
+              <div className="form-floating   ">
+                <input
+                  type="email"
+                  className="form-control"
+                  id="floatingInput"
+                  placeholder="diaLluvioso"
+                ></input>
+                <label htmlFor="floatingInput">Username</label>
+              </div>
+            </div>
             <div className="mb-2">
               <div className="form-floating   ">
                 <input
@@ -39,16 +44,16 @@ export default function LogIn() {
                 <label htmlFor="floatingPassword">Password</label>
               </div>
             </div>
-            <div className="mb-2 form-check">
-              <input
-                type="checkbox"
-                name="connected"
-                className="form-check-input"
-                id=""
-              ></input>
-              <label htmlFor="connected" className="form-check-label">
-                Recordar mi usuario
-              </label>
+            <div className="mb-2">
+              <div className="form-floating">
+                <input
+                  type="password"
+                  className="form-control"
+                  id="floatingPassword"
+                  placeholder="Password"
+                ></input>
+                <label htmlFor="floatingPassword">Confirm Password</label>
+              </div>
             </div>
             <div className="d-grid">
               <button
@@ -61,51 +66,54 @@ export default function LogIn() {
             </div>
             <div className="my-1">
               <span>
-                ¿No tienes cuenta? <a href="/register">Registrate</a>
+                ¿Ya tienes cuenta? <a href="/login">Inicia sesion</a>
               </span>
               <br></br>
-              <span>
-                {" "}
-                <a href="#">Recuperar contraseña</a>
-              </span>
             </div>
           </form>
 
           <div className="container w-100 my-3">
             <div className="row text-center">
-              <div className="col-12">Iniciar Sesion</div>
+              <div className="col-12">Or you can Sign Up with:</div>
             </div>
             <div className="row mt-2">
               <div className="col">
                 <button
-                  className={styles.btn + " btn-outline w-100 my-1 p-2"}
-                  onClick={signIn}
+                  className="btn btn-outline w-100 my-1"
+                  style={{
+                    backgroundColor: "white",
+                    border: "1px solid rgb(79, 87, 86)",
+                  }}
                 >
                   <div className="row align-items-center">
                     <div className="col-2 d-none d-md-block">
-                      <Image
+                      <img
                         className="rounded rounded-3"
-                        src="/../public/googleLogIn.png"
-                        height="32"
+                        src="/img/googleLogIn.png"
                         width="32"
                         alt=""
-                      />
+                      ></img>
                     </div>
                     <div className="col-12 col-md-10 text-center">Google</div>
                   </div>
                 </button>
               </div>
               <div className="col">
-                <button className={styles.btn + " btn-outline w-100 my-1 p-2"}>
+                <button
+                  className="btn btn-outline w-100 my-1"
+                  style={{
+                    backgroundColor: "white",
+                    border: "1px solid rgb(79, 87, 86)",
+                  }}
+                >
                   <div className="row align-items-center">
                     <div className="col-2 d-none d-md-block">
-                      <Image
+                      <img
                         className="rounded rounded-3"
-                        src="/../public/facebookLogIn.png"
+                        src="/img/facebookLogIn.png"
                         width="32"
-                        height="32"
                         alt=""
-                      />
+                      ></img>
                     </div>
                     <div className="col-12 col-md-10 text-center">Facebook</div>
                   </div>

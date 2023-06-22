@@ -134,9 +134,8 @@ export default function Home() {
                 />
               </div>
               <div className="d-flex align-items-center justify-content-center">
-                <div
-                  className="p-2 bg-dark text-white rounded text-center"
-                  style={{ width: "8rem" }}
+                <button
+                  className="btn text-white mt-1 mb-2 p-2"
                   onClick={() => {
                     setTimerActive(!timerActive);
                     setTimerState({
@@ -147,7 +146,7 @@ export default function Home() {
                   }}
                 >
                   {timerActive ? "PAUSE " : "START"}
-                </div>
+                </button>
               </div>
               <Tasklist />
               <hr
