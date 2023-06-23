@@ -36,10 +36,12 @@ export default function CircleTimer({
         key={myKey}
         isPlaying={started}
         duration={duration}
-        colors="url(#green-lime)"
-        updateInterval={1}
-        strokeWidth={20}
+        colors="url(#blue-cyan)"
+        updateInterval={0}
+        strokeWidth={30}
         onComplete={onComplete}
+        size={200}
+        trailColor="#FFFFFF"
       >
         {({ remainingTime }) => {
           return formatTime(remainingTime);
@@ -47,9 +49,9 @@ export default function CircleTimer({
       </CountdownCircleTimer>
       <svg width="0" height="0">
         <defs>
-          <linearGradient id="green-lime" x1="1" y1="0" x2="0" y2="0">
-            <stop offset={"25%"} stopColor="green" />
-            <stop offset={"95%"} stopColor="lime" />
+          <linearGradient id="blue-cyan" x1="2" y1="2" x2="0" y2="0">
+            <stop offset={"25%"} stopColor="blue" />
+            <stop offset={"95%"} stopColor="cyan" />
           </linearGradient>
         </defs>
       </svg>

@@ -239,22 +239,22 @@ export default function TasksList() {
                   className={
                     activeTask != id
                       ? "list-group-item"
-                      : "list-group-item active bg-gray-800"
+                      : "list-group-item active"
                   }
                   key={id}
                   onClick={() => {
-                    setActiveTask(id);
+                    activeTask === id ? setActiveTask(-1) : setActiveTask(id)
                   }}
                 >
                   <dl>
                     <dt style={{ display: "block", float: "right" }}>
                       <small>Nombre de la Tarea</small>
                     </dt>
-                    <dd style={{ color: "lime" }}>{nameTarea}</dd>
+                    <dd style={{ color : activeTask === id ? 'white' : 'limegreen', fontWeight : activeTask === id ? 'bold' : 'normal'}}>{nameTarea}</dd>
                     <dt style={{ display: "block", float: "right" }}>
                       <small>Estado</small>
                     </dt>
-                    <dd style={{ color: "green" }}>
+                    <dd style={{ color: activeTask === id ? 'white' : 'green' }}>
                       {estado == "done"
                         ? "Finalizada"
                         : estado == "notStarted"
@@ -264,26 +264,34 @@ export default function TasksList() {
                     <dt style={{ display: "block", float: "right" }}>
                       <small>{activeTask == id ? "Descripcion" : ""}</small>
                     </dt>
-                    <dd style={{ color: "gray" }}>
+                    <dd style={{ color: activeTask === id ? 'lightgray' : 'gray' }}>
                       {activeTask == id ? descripcion || "Sin Descripcion" : ""}
                     </dd>
                     <dt style={{ display: "block", float: "right" }}>
                       <small>{activeTask == id ? "Tiempo dedicado" : ""}</small>
                     </dt>
-                    <dd style={{ color: "yellow" }}>
+                    <dd style={{ color: "yellow",  fontWeight: "bold"}}>
                       {getFocusTimeForTask(id)}
                     </dd>
                     <dt
                       style={{ display: "block", float: "right", color: "orange" }}
                     >
                       {activeTask == id && estado === "pending" ? (
-                        <button
-                          onClick={() => {
-                            updateTaskState(id, "done");
-                          }}
+                        <a
+                        href="#"
+                        className="text-white"
+                        style={{ textDecoration: "none" }}
+                        onClick={() => {
+                          updateTaskState(id, "done");
+                        }}
+                      >
+                        <div
+                          className="p-1 bg-info rounded text-center"
+                          style={{ width: "5rem", color: 'white'}}
                         >
                           Finalizar
-                        </button>
+                        </div>
+                      </a>
                       ) : ("")}
                     </dt>
                     <dd style={{ color:"orange" }}>
@@ -293,13 +301,21 @@ export default function TasksList() {
                       style={{ display: "block", float: "right", color: "red"}}
                     >
                       {activeTask == id ? (
-                        <button
-                          onClick={() => {
-                            deleteTask(id)
-                          }}
+                        <a
+                        href="#"
+                        className="text-white"
+                        style={{ textDecoration: "none" }}
+                        onClick={() => {
+                          deleteTask(id)
+                        }}
+                      >
+                        <div
+                          className= {estado === 'done' ? "p-1 bg-info rounded text-center" : "p-1 rounded text-center"}
+                          style={{ width: "5rem", color: estado === 'done' ? 'white' : 'orange'}}
                         >
                           Eliminar
-                        </button>
+                        </div>
+                      </a>
                       ) : ("")}
                     </dt>
                     <dd style={{ color:"red" }}>

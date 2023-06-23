@@ -28,14 +28,14 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
     }
 
     return (
-        <Container component='main' maxWidth='xs'>
+        <Container component='main' maxWidth='md'>
             <Box
                 >
                 <Box 
                     component='form' 
                     onSubmit={handleSubmit(handleFormSubmit)}
                 >
-                    <Grid container justifyContent={"left"} rowSpacing={1} columns={2} columnSpacing={2} rowGap={2} columnGap={2}>
+                    <Grid container justifyContent={"left"} rowSpacing={1} columns={4} columnSpacing={2} rowGap={2} columnGap={2}>
                         <Grid item>
                             <TextField
                                 {...register('task')}
@@ -45,23 +45,9 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
                                 autoFocus
                                 autoComplete="off"
                                 variant="standard"
-                                sx={{ input: { color: 'white' }, }}
+                                sx={{ input: { color: 'black' }, position: 'relative', top: '49%' }}
                                 InputLabelProps={{ style: { color: 'gray' } }}
                             />
-                        </Grid>
-                        <Grid item>
-                            <InputLabel id='select-label'></InputLabel>
-                            <Select
-                                labelId="select-label"
-                                id="select"
-                                value={state}
-                                sx={{ color: 'gray' }}
-                                onChange={handleStateChange}
-                            >
-                                <MenuItem value={'notStarted'}>No Empezado</MenuItem>
-                                <MenuItem value={'pending'}>Pendiente</MenuItem>
-                                <MenuItem value={'done'}>Finalizado</MenuItem>
-                            </Select>
                         </Grid>
                         <Grid item>
                             <TextField
@@ -71,17 +57,31 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
                                 rows={3}
                                 autoComplete="off"
                                 variant="standard"
-                                inputProps={{ style: { color: 'white' } }}
+                                inputProps={{ style: { color: 'black' } }}
                                 InputLabelProps={{ style: { color: 'gray' } }}
                             />
                         </Grid>
                         <Grid item>
+                            <InputLabel id='select-label'></InputLabel>
+                            <Select
+                                labelId="select-label"
+                                id="select"
+                                value={state}
+                                sx={{ color: 'gray', position: 'relative', top: '40%' }}
+                                onChange={handleStateChange}
+                            >
+                                <MenuItem value={'notStarted'}>No Empezado</MenuItem>
+                                <MenuItem value={'pending'}>Pendiente</MenuItem>
+                                <MenuItem value={'done'}>Finalizado</MenuItem>
+                            </Select>
+                        </Grid>
+                        <Grid item>
                         <Button
                             type="submit"
-                            sx={{ position: 'relative', left: '5%' }}
-                            variant="contained"
+                            sx={{ position: 'relative', top: '55%', color:"cadetblue" }}
+                            variant="outlined"
                         >
-                            Añadir Tarea
+                            Añadir Nueva Tarea
                         </Button>
                         </Grid>
                     </Grid>
