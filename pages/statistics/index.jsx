@@ -15,7 +15,6 @@ export default function Statistics() {
               concentracicon utilizando Fungi Focus
             </p>
           </div>
-
           <ul className="nav nav-pills justify-content-center">
             <li className="nav-item">
               <a className="nav-link active" href="#">
@@ -112,59 +111,35 @@ export default function Statistics() {
             </div>
             <div>
               <div className="row">
-                <div className="col-8">
+                <div className="col-5">
                   <h5>Focus hours</h5>
+
+                </div>
+                <div className="col-7">
+                  <div>
+                    <select id="hoursCharts" className="form-select" aria-label="Default select example" onChange={() => {
+                      let valorChart = document.getElementById('hoursCharts').value;
+                      console.log(valorChart);
+                      setTimeFrame(valorChart);
+                    }}>
+                      <option>Seleccione como ver sus estadisticas</option>
+                      <option value="day">Dia</option>
+                      <option value="week">Semana</option>
+                      <option value="month">Mes</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="mt-3">
                   <p>
                     A continuacion se encuentra tu resumen de horas de
                     concentracion
                   </p>
                 </div>
-                <div className="col-4">
-                  <div className="d-flex flex-row-reverse">
-                    <a
-                      href="#"
-                      className="text-white"
-                      style={{ textDecoration: "none" }}
-                      onClick={() => setTimeFrame("months")}
-                    >
-                      <div
-                        className="p-2 bg-primary rounded text-center"
-                        style={{ width: "5rem" }}
-                      >
-                        Mes
-                      </div>
-                    </a>
-                    <a
-                      href="#"
-                      className="text-white"
-                      style={{ textDecoration: "none" }}
-                      onClick={() => setTimeFrame("weeks")}
-                    >
-                      <div
-                        className="p-2 bg-dark text-white rounded text-center"
-                        style={{ width: "5rem" }}
-                      >
-                        Semana
-                      </div>
-                    </a>
-                    <a
-                      href="#"
-                      className="text-white"
-                      style={{ textDecoration: "none" }}
-                      onClick={() => setTimeFrame("days")}
-                    >
-                      <div
-                        className="p-2 bg-info rounded text-center"
-                        style={{ width: "5rem" }}
-                      >
-                        Dia
-                      </div>
-                    </a>
-                  </div>
-                </div>
               </div>
               <div className="container p-4 w-75">
                 <Stats timeFrame={timeFrame} />
+                <button>Anterior</button>
+                <button>Siguiente</button>
               </div>
             </div>
           </div>
