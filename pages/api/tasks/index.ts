@@ -12,8 +12,10 @@ export default async function handler(
     case "GET":
       try {
         let id = req.query.id;
-        const query = "SELECT * FROM tarea WHERE idUser=? AND deleted = ?";
-        const [data] = await dbconnection.execute(query, [id, false]);
+        //const query = "SELECT * FROM tarea WHERE idUser=? AND deleted = ?";
+        //const [data] = await dbconnection.execute(query, [id, false]);
+        const query = "SELECT * FROM tarea"
+        const [data] = await dbconnection.execute(query)
 
         res.status(200).json({ tasks: data }); // 200: OK (Exito genérico)
       } catch (error: any) {
