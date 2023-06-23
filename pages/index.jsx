@@ -57,6 +57,11 @@ export default function Home() {
       laps: laps,
     });
   }
+  const isBrowser = () => typeof windows !== 'undefined'
+  function scrollToTop() {
+    if (!isBrowser) return
+    window.scrollTo({top:0, behavior:'smooth'})
+  }
 
   return (
     <React.Fragment>
@@ -162,8 +167,9 @@ export default function Home() {
             type="submit"
             className="btn botonCerrar text-white mt-1 mb-2 p-2"
             id="logInBtnConfirm"
+            onClick={scrollToTop}
           >
-            Volver hacia atras
+            Volver hacia arriba
           </button>
         </div>
       </div>
