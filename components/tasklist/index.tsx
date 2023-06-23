@@ -37,12 +37,12 @@ export default function TasksList() {
   const prevTimerStateRef = useRef<string>("pomodoro");
 
   async function getTasksData() {
-    let response = await fetch(`http://localhost:3000/api/tasks/?id=${idUser}`);
+    let response = await fetch(`${process.env.PUBLIC_URL}/api/tasks/?id=${idUser}`);
     let res = await response.json();
     setTasks(res.tasks);
 
     response = await fetch(
-      `http://localhost:3000/api/tasks/focusTimes/?id=${idUser}`
+      `${process.env.PUBLIC_URL}/api/tasks/focusTimes/?id=${idUser}`
     );
     res = await response.json();
     setFocusTime(res.focusTime);
@@ -147,7 +147,7 @@ export default function TasksList() {
 
     if (task.estado != "done" && concentracionTime > minTime) {
       if (task.estado === "notStarted") updateTaskState(idTarea, "pending");
-      const urlEndPoint = `http://localhost:3000/api/tasks/focusTimes`;
+      const urlEndPoint = `${process.env.PUBLIC_URL}/api/tasks/focusTimes`;
       const response = await fetch(urlEndPoint, {
         method: "POST",
         headers: {
@@ -179,7 +179,7 @@ export default function TasksList() {
   ) {
     if (session != null) {
       if (descripcion === undefined) descripcion = "";
-      const urlEndPoint = `http://localhost:3000/api/tasks`;
+      const urlEndPoint = `${process.env.PUBLIC_URL}/api/tasks`;
       const response = await fetch(urlEndPoint, {
         method: "POST",
         headers: {
@@ -201,7 +201,7 @@ export default function TasksList() {
   }
 
   async function updateTaskState(id: number, state: string) {
-    const urlEndPoint = `http://localhost:3000/api/tasks`;
+    const urlEndPoint = `${process.env.PUBLIC_URL}/api/tasks`;
     const response = await fetch(urlEndPoint, {
       method: "PATCH",
       headers: {
@@ -216,7 +216,7 @@ export default function TasksList() {
   }
 
   async function deleteTask(id: number) {
-    const urlEndPoint = `http://localhost:3000/api/tasks/?id=${id}`;
+    const urlEndPoint = `${process.env.PUBLIC_URL}/api/tasks/?id=${id}`;
     const response = await fetch(urlEndPoint, {
       method: "DELETE",
       headers: {

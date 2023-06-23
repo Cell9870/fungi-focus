@@ -26,11 +26,11 @@ export default function Navbar() {
   useEffect(() => {
     async function checkUser() {
       let response = await fetch(
-        `http://localhost:3000/api/users/?id=${session?.user?.email}`
+        `${process.env.PUBLIC_URL}/api/users/?id=${session?.user?.email}`
       );
       let res = await response.json();
       if (!res.users[0]) {
-        const response = await fetch("http://localhost:3000/api/users/", {
+        const response = await fetch(`${process.env.PUBLIC_URL}/api/users/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
