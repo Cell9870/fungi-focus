@@ -4,6 +4,7 @@ import React from "react";
 import Info from "@/components/info";
 import Timer from "@/components/timer";
 import Tasklist from "@/components/tasklist";
+import Modal from "@/components/modal";
 
 export default function Home() {
   let { timerActive, setTimerActive, timerState, setTimerState } =
@@ -121,14 +122,7 @@ export default function Home() {
                     Long Break
                   </div>
                 </a>
-                <button
-                  type="button"
-                  className="btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop"
-                >
-                  Tiempo Personalizado
-                </button>
+                <Modal durations={durations} setDurations={setDurations} />
               </div>
               <div className="p-3">
                 <Timer
