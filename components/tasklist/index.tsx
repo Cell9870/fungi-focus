@@ -4,7 +4,6 @@ import TaskForm from "./taskform";
 import { useGlobalContext } from "../../context/store";
 import { useSession } from "next-auth/react";
 import React from "react";
-import {baseUrl} from "../../next.config"
 
 interface ITask {
   id: number;
@@ -22,7 +21,7 @@ interface IFocusTime {
 }
 
 export default function TasksList() {
-  const { timerActive, timerState } = useGlobalContext();
+  const { timerActive, timerState, baseUrl } = useGlobalContext();
 
   const { data: session } = useSession();
   const idUser = session?.user?.email;
