@@ -18,6 +18,16 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/index.tsx", "pages/estadisticas/index.jsx", "components/timer/index.jsx", "pages/api/tasks/index.ts", "pages/api/tasks/focusTimes.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/index.tsx",
+    "pages/statistics/temp.jsx",
+    "pages/index.jsx",
+    "pages/api/tasks/index.ts",
+    "pages/api/tasks/focusTimes.ts",
+    "pages/login/index.jsx"
+, "components/navbar/index.jsx"  ],
   "exclude": ["node_modules"]
 }

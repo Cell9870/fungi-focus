@@ -1,27 +1,83 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  font-size: 16px;
+  font-family: "Open Sans";
+  --text-primary: #b6b6b6;
+  --text-secondary: #ececec;
+  --bg-primary: #23232e;
+  --bg-secondary: #141418;
+  --transition-speed: 600ms;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to right, #ffa751, #f3e187);
+  margin: 0;
+  padding: 0;
+}
+
+/* temas alternativos */
+.dark {
+  --text-primary: #b6b6b6;
+  --text-secondary: #ececec;
+  --bg-primary: #23232e;
+  --bg-secondary: #141418;
+}
+
+.light {
+  --text-primary: #1f1f1f;
+  --text-secondary: #000000;
+  --bg-primary: #ffffff;
+  --bg-secondary: #e4e4e4;
+}
+
+.solar {
+  --text-primary: #576e75;
+  --text-secondary: #35535c;
+  --bg-primary: #fdf6e3;
+  --bg-secondary: #f5e5b8;
+}
+
+.dark #darkIcon {
+  display: block;
+}
+
+.light #lightIcon {
+  display: block;
+}
+
+.solar #solarIcon {
+  display: block;
+}
+
+/* Botones estilos */
+button.btn span {
+  color: white;
+}
+
+button.btn {
+  border-radius: 0.3rem;
+  transition: 0.4s all;
+  background-color: #4b594c;
+}
+
+button.btn:hover {
+  background-color: #79927d;
+  border: 1px solid rgb(79, 87, 86);
+  border-radius: 0.4rem;
+  transform: scale(1.01, 1.01);
+}
+
+button.botonCerrar:hover {
+  border: 1px solid rgb(138, 37, 37);
+  border-radius: 15px;
+  background-color: rgb(82, 43, 43);
+}
+
+.log-in {
+  background: linear-gradient(to right, #ffa751, #ffe259);
+}
+
+.bg {
+  background-image: url(/staycool.jpg);
+  background-position: center center;
+  background-size: cover;
 }

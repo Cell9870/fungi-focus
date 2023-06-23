@@ -14,9 +14,9 @@ import {
  */
 
 interface ITimerState {
-  current: string
-  key: number
-  laps: number
+  current: string;
+  key: number;
+  laps: number;
 }
 
 interface ContextProps {
@@ -24,14 +24,20 @@ interface ContextProps {
   setTimerActive: Dispatch<SetStateAction<boolean>>;
   timerState: ITimerState;
   setTimerState: Dispatch<SetStateAction<ITimerState>>;
+  theme: string;
+  setTheme: Dispatch<SetStateAction<string>>;
 }
 
 //valores iniciales
 const GlobalContext = createContext<ContextProps>({
   timerActive: false,
   setTimerActive: (): boolean => false,
-  timerState: {current: "pomodoro", key: 0, laps: 0},
-  setTimerState : ():ITimerState => {return {current: "pomodoro", key: 0, laps: 0}}
+  timerState: { current: "pomodoro", key: 0, laps: 0 },
+  setTimerState: (): ITimerState => {
+    return { current: "pomodoro", key: 0, laps: 0 };
+  },
+  theme: "dark",
+  setTheme: (): string => "dark",
 });
 
 export const GlobalContextProvider = ({ children }: any) => {
@@ -40,10 +46,20 @@ export const GlobalContextProvider = ({ children }: any) => {
     current: "pomodoro",
     key: 0,
     laps: 0,
-  })
+  });
+  const [theme, setTheme] = useState("dark");
 
   return (
-    <GlobalContext.Provider value={{ timerActive, setTimerActive, timerState, setTimerState }}>
+    <GlobalContext.Provider
+      value={{
+        timerActive,
+        setTimerActive,
+        timerState,
+        setTimerState,
+        theme,
+        setTheme,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );
