@@ -70,7 +70,7 @@ export default function TasksList() {
   }
 
   useEffect(() => {
-    //console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}, timerState: ${timerState.current}, timerStatePrev ${prevTimerStateRef.current}`)
+    console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}, timerState: ${timerState.current}, timerStatePrev ${prevTimerStateRef.current}`)
     let pomodoroActive = timerState.current === "pomodoro" && timerActive;
     let startCounting =
       pomodoroActive &&
