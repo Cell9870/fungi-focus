@@ -4,6 +4,7 @@ import TaskForm from "./taskform";
 import { useGlobalContext } from "../../context/store";
 import { useSession } from "next-auth/react";
 import React from "react";
+import {baseUrl} from "../../next.config"
 
 interface ITask {
   id: number;
@@ -38,10 +39,8 @@ export default function TasksList() {
 
   async function getTasksData() {
     //let response = await fetch(`${process.env.PUBLIC_URL}/api/tasks/?id=${idUser}`);
-    let response = await fetch(`${process.env.PUBLIC_URL}/api/tasks/`);
-    console.log(`url: ${process.env.PUBLIC_URL}, response: ${response.json()}`)
-    response = await fetch(`./api/tasks/`);
-    console.log(`response: ${response.json()}`)
+    let response = await fetch(`${baseUrl}/api/tasks/`);
+    console.log(`url: ${process.env.PUBLIC_URL}, local: ${baseUrl}`)
     let res = await response.json();
     setTasks(res.tasks);
 
