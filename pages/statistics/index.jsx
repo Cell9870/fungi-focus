@@ -159,7 +159,7 @@ export default function Statistics() {
                 </div>
               </div>
               <div className="container p-4 w-75">
-                <Stats chartType={"days"} />
+                <Stats timeFrame={"days"} />
               </div>
             </div>
           </div>

@@ -1,13 +1,16 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { useGlobalContext } from "@/context/store";
+import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
+  const { theme } = useGlobalContext();
+
   return (
     <Html lang="en">
       <Head />
-      <body>
+      <body className={theme}>
         <Main />
         <NextScript />
       </body>
     </Html>
-  )
+  );
 }
