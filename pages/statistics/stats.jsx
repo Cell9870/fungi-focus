@@ -3,6 +3,26 @@ import { Chart } from "chart.js/auto";
 
 let canvas;
 
+export default function Stats({ timeFrame }) {
+  function createChart() {
+    let ctx = document.getElementById("myChart").getContext("2d");
+    canvas = new Chart(ctx, testChart);
+  }
+
+  useEffect(() => {
+    try {
+      createChart();
+    } catch (err) {
+      if (canvas) {
+        canvas.destroy();
+        createChart();
+      }
+    }
+  }, []);
+
+  return <canvas id="myChart"></canvas>;
+}
+
 let testChart = {
   type: "bar",
   data: {
@@ -32,23 +52,3 @@ let testChart = {
     ],
   },
 };
-
-export default function Stats({ timeFrame}) {
-  function createChart() {
-    let ctx = document.getElementById("myChart").getContext("2d");
-    canvas = new Chart(ctx, testChart);
-  }
-
-  useEffect(() => {
-    try {
-      createChart();
-    } catch (err) {
-      if (canvas) {
-        canvas.destroy();
-        createChart();
-      }
-    }
-  }, []);
-
-  return <canvas id="myChart"></canvas>;
-}

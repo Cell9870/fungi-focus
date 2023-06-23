@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Stats from "./stats";
 
 export default function Statistics() {
+  const [timeFrame, setTimeFrame] = useState("days");
+
   return (
     <div className="container w-75 my-3 rounded rounded-2 shadow shadow-lg">
       <div className="row align-items-stretch">
@@ -120,9 +122,10 @@ export default function Statistics() {
                 <div className="col-4">
                   <div className="d-flex flex-row-reverse">
                     <a
-                      href=""
+                      href="#"
                       className="text-white"
                       style={{ textDecoration: "none" }}
+                      onClick={() => setTimeFrame("months")}
                     >
                       <div
                         className="p-2 bg-primary rounded text-center"
@@ -132,9 +135,10 @@ export default function Statistics() {
                       </div>
                     </a>
                     <a
-                      href=""
+                      href="#"
                       className="text-white"
                       style={{ textDecoration: "none" }}
+                      onClick={() => setTimeFrame("weeks")}
                     >
                       <div
                         className="p-2 bg-dark text-white rounded text-center"
@@ -144,9 +148,10 @@ export default function Statistics() {
                       </div>
                     </a>
                     <a
-                      href=""
+                      href="#"
                       className="text-white"
                       style={{ textDecoration: "none" }}
+                      onClick={() => setTimeFrame("days")}
                     >
                       <div
                         className="p-2 bg-info rounded text-center"
@@ -159,7 +164,7 @@ export default function Statistics() {
                 </div>
               </div>
               <div className="container p-4 w-75">
-                <Stats timeFrame={"days"} />
+                <Stats timeFrame={timeFrame} />
               </div>
             </div>
           </div>
