@@ -23,7 +23,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/index.tsx",
-    "pages/estadisticas/index.jsx",
+    "pages/statistics/temp.jsx",
     "pages/index.jsx",
     "pages/api/tasks/index.ts",
     "pages/api/tasks/focusTimes.ts",

@@ -98,7 +98,7 @@ export default function Navbar() {
         </li>
 
         <li className={styles.nav_item}>
-          <a href="#" className={styles.nav_link}>
+          <a href="/statistics" className={styles.nav_link}>
             <svg
               aria-hidden="true"
               focusable="false"
