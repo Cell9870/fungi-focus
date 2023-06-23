@@ -37,12 +37,14 @@ export default function TasksList() {
   const prevTimerStateRef = useRef<string>("pomodoro");
 
   async function getTasksData() {
-    let response = await fetch(`${process.env.PUBLIC_URL}/api/tasks/?id=${idUser}`);
+    //let response = await fetch(`${process.env.PUBLIC_URL}/api/tasks/?id=${idUser}`);
+    let response = await fetch(`${process.env.PUBLIC_URL}/api/tasks/`);
     let res = await response.json();
     setTasks(res.tasks);
 
     response = await fetch(
-      `${process.env.PUBLIC_URL}/api/tasks/focusTimes/?id=${idUser}`
+      //`${process.env.PUBLIC_URL}/api/tasks/focusTimes/?id=${idUser}`
+      `${process.env.PUBLIC_URL}/api/tasks/focusTimes/`
     );
     res = await response.json();
     setFocusTime(res.focusTime);
