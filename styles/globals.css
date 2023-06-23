@@ -16,24 +16,61 @@ body {
 
 /* temas alternativos */
 .dark {
-  --text-primary: #b6b6b6;
-  --text-secondary: #ececec;
-  --bg-primary: #23232e;
-  --bg-secondary: #141418;
+  --fg-1: #dad9d9;
+  --fg-2: #cacaca;
+  --fg-3: #c4c4c4;
+  --fg-4: #b6b6b6;
+  --bg-1: #333341;
+  --bg-2: #27272e;
+  --bg-3: #1c1c21;
+  --bg-4: #141418;
 }
 
 .light {
-  --text-primary: #1f1f1f;
-  --text-secondary: #000000;
-  --bg-primary: #ffffff;
-  --bg-secondary: #e4e4e4;
+  --fg-1: #333341;
+  --fg-2: #27272e;
+  --fg-3: #1c1c21;
+  --fg-4: #141418;
+  --bg-1: #dad9d9;
+  --bg-2: #cacaca;
+  --bg-3: #c4c4c4;
+  --bg-4: #b6b6b6;
 }
 
 .solar {
-  --text-primary: #576e75;
-  --text-secondary: #35535c;
-  --bg-primary: #fdf6e3;
-  --bg-secondary: #f5e5b8;
+  --fg-1: #576e75;
+  --fg-2: #4c6871;
+  --fg-3: #47666f;
+  --fg-4: #294952;
+  --bg-1: #fdf6e3;
+  --bg-2: #f8eac6;
+  --bg-3: #f2dda6;
+  --bg-4: #eccd77;
+}
+
+.bg1 {
+  background-color: var(--bg-1);
+}
+.bg2 {
+  background-color: var(--bg-2);
+}
+.bg3 {
+  background-color: var(--bg-3);
+}
+.bg4 {
+  background-color: var(--bg-4);
+}
+.fg1 {
+  color: var(--fg-1);
+}
+.fg2 {
+  color: var(--fg-2);
+}
+.fg3 {
+  color: var(--fg-3);
+}
+.fg4 {
+  color: var(--fg-4);
 }
 
 .dark #darkIcon {
