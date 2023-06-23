@@ -12,8 +12,8 @@ export default async function handler(
     case "GET":
       try {
         let id = req.query.id;
-        const query = "SELECT * FROM tarea WHERE idUser=?";
-        const [data] = await dbconnection.execute(query, [id]);
+        const query = "SELECT * FROM tarea WHERE idUser=? AND deleted = ?";
+        const [data] = await dbconnection.execute(query, [id, false]);
 
         res.status(200).json({ tasks: data }); // 200: OK (Exito genérico)
       } catch (error: any) {
@@ -24,8 +24,8 @@ export default async function handler(
       try {
         const { nameTarea, estado, descripcion, idUser } = body;
         const query =
-          "INSERT INTO tarea(nameTarea, estado, descripcion, idUser) VALUES (?, ?, ?, ?);";
-        const values = [nameTarea, estado, descripcion, idUser];
+          "INSERT INTO tarea(nameTarea, estado, descripcion, idUser, deleted) VALUES (?, ?, ?, ?, ?);";
+        const values = [nameTarea, estado, descripcion, idUser, false];
         await dbconnection.execute(query, values);
         const [data] = await dbconnection.execute("SELECT LAST_INSERT_ID();");
         res.status(201).json(data); // 201: CREATED SUCESSFULLY
@@ -34,6 +34,16 @@ export default async function handler(
       }
       break;
     case "DELETE":
+      try {
+        const id = req.query.id;
+        const query = "UPDATE tarea SET deleted = ? WHERE (id = ?);";
+        const values = [true, id];
+        const [data] = await dbconnection.execute(query, values);
+
+        res.status(201).json(data);
+      } catch (error: any) {
+        res.status(500).json({ PUT_ERROR: error.message });
+      }
       break;
     case "PATCH":
       try {
