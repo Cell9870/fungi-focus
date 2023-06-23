@@ -43,7 +43,7 @@ export default function TasksList() {
     setTasks(res.tasks);
 
     response = await fetch(
-      `http://localhost:3000/api/tasks/focusTimes/?id=${idUser}`
+      `http://localhost:3000/api/tasks/focusTimes/${idUser}`
     );
     res = await response.json();
     setFocusTime(res.focusTime);
