@@ -11,7 +11,7 @@ export default async function handler(
   switch (method) {
     case "GET":
       try {
-        let id = req.query.id;
+        //let id = req.query.id;
         //const query = "SELECT * FROM tarea WHERE idUser=? AND deleted = ?";
         //const [data] = await dbconnection.execute(query, [id, false]);
         const query = "SELECT * FROM tarea"
