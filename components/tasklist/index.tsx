@@ -70,7 +70,7 @@ export default function TasksList() {
   }
 
   useEffect(() => {
-    console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}, timerState: ${timerState.current}, timerStatePrev ${prevTimerStateRef.current}`)
+    //console.log(`CurrTask: ${activeTask}, PrevTask: ${prevTaskRef.current}, CurrTimer:${timerActive}, PrevTimer:${prevTimerRef.current}, timerState: ${timerState.current}, timerStatePrev ${prevTimerStateRef.current}`)
     let pomodoroActive = timerState.current === "pomodoro" && timerActive;
     let startCounting =
       pomodoroActive &&
@@ -96,6 +96,7 @@ export default function TasksList() {
     let changedDuration =
       !pomodoroActive &&
       prevTimerStateRef.current === "pomodoro" &&
+      timerState.current != "pomodoro" &&
       activeTask != -1 &&
       prevTimerRef.current;
     let unselectedTask =
@@ -105,33 +106,31 @@ export default function TasksList() {
       prevTaskRef.current != -1;
 
     if (startCounting) {
-      // console.log(`start: contar desde ahora para ${activeTask} `);
+      //console.log(`start: contar desde ahora para ${activeTask} `);
       setCurrentTime(Number.parseInt((Date.now() / 1000).toFixed()));
     }
     if (paused) {
-      // console.log(`pause: añadir para ${activeTask}`);
+      //console.log(`pause: añadir para ${activeTask}`);
       postFocusTime(activeTask);
     }
     if (changedTask) {
-      // console.log(
-      //   `seleccionar tarea: añadir a ${prevTaskRef.current} y contar para ${activeTask}`
-      // );
+      //console.log(`seleccionar tarea: añadir a ${prevTaskRef.current} y contar para ${activeTask}`);
       postFocusTime(prevTaskRef.current);
       setCurrentTime(Number.parseInt((Date.now() / 1000).toFixed()));
     }
     //seleccionó una tarea sin antes tener ninguna seleccionada, con el timer activado: empezar a contar desde ahora
     if (selectedTask) {
-      // console.log(`seleccionar tarea: contar desde ahora para ${activeTask}`);
+      //console.log(`seleccionar tarea: contar desde ahora para ${activeTask}`);
       setCurrentTime(Number.parseInt((Date.now() / 1000).toFixed()));
     }
 
     if (changedDuration) {
-      // console.log(`termino o cambio pomodoro: añadir para ${activeTask}`);
+      //console.log(`termino o cambio pomodoro: añadir para ${activeTask}`);
       postFocusTime(activeTask);
     }
 
     if (unselectedTask) {
-      // console.log(`tarea deseleccionada: añadir para ${prevTaskRef.current}`);
+      //console.log(`tarea deseleccionada: añadir para ${prevTaskRef.current}`);
       postFocusTime(prevTaskRef.current);
     }
 
@@ -165,12 +164,12 @@ export default function TasksList() {
 
       getTasksData();
     }
-    // else
-    // console.log(
-    //   task.estado === "done"
-    //     ? "No se añade porque la tarea está terminada"
-    //     : `Tiempo de concentracion por debajo del minimo (${minTime}s)`
-    // );
+    else
+    console.log(
+      task.estado === "done"
+        ? "No se añade porque la tarea está terminada"
+        : `Tiempo de concentracion por debajo del minimo (${minTime}s)`
+    );
   }
 
   async function postTask(
