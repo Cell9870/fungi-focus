@@ -4,6 +4,7 @@ import TaskForm from "./taskform";
 import { useGlobalContext } from "../../context/store";
 import { useSession } from "next-auth/react";
 import React from "react";
+import TaskModal from "./modal";
 
 interface ITask {
   id: number;
@@ -37,7 +38,7 @@ export default function TasksList() {
   const prevTimerStateRef = useRef<string>("pomodoro");
 
   async function getTasksData() {
-    let response = await fetch(`http://localhost:3000/api/tasks/?id=${idUser}`);
+    let response = await fetch(`http://localhost:3000/api/tasks/${idUser}`);
     let res = await response.json();
     setTasks(res.tasks);
 
@@ -358,6 +359,7 @@ export default function TasksList() {
             setActiveTask(-1);
           }}
         >
+          <TaskModal />
           <TaskForm onNewTask={postTask} />
         </div>
       </div>
