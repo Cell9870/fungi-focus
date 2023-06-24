@@ -66,7 +66,7 @@ export default function Home() {
 
   return (
     <React.Fragment>
-      <div className="container w-75 my-3 rounded rounded-2 shadow shadow-lg col bg-white rounded">
+      <div className="container w-75 my-3 rounded rounded-2 shadow shadow-lg col bg1 fg1">
         <div className="row align-items-stretch">
           <div className="col p-5 rounded">
             <div className="px-4">

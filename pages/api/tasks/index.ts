@@ -9,19 +9,6 @@ export default async function handler(
   const dbconnection = await connect();
 
   switch (method) {
-    case "GET":
-      try {
-        //let id = req.query.id;
-        //const query = "SELECT * FROM tarea WHERE idUser=? AND deleted = ?";
-        //const [data] = await dbconnection.execute(query, [id, false]);
-        const query = "SELECT * FROM tarea"
-        const [data] = await dbconnection.execute(query)
-
-        res.status(200).json({ tasks: data }); // 200: OK (Exito genérico)
-      } catch (error: any) {
-        res.status(500).json({ GET_ERROR: error.message });
-      }
-      break;
     case "POST":
       try {
         const { nameTarea, estado, descripcion, idUser } = body;

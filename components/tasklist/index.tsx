@@ -4,6 +4,7 @@ import TaskForm from "./taskform";
 import { useGlobalContext } from "../../context/store";
 import { useSession } from "next-auth/react";
 import React from "react";
+import TaskModal from "./modal";
 
 interface ITask {
   id: number;
@@ -37,20 +38,17 @@ export default function TasksList() {
   const prevTimerStateRef = useRef<string>("pomodoro");
 
   async function getTasksData() {
-    //let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/?id=${idUser}`);
-    let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/tasks/`, );
-    console.log(`url: ${process.env.NEXT_PUBLIC_BASE_URL}`)
+    let response = await fetch(`http://localhost:3000/api/tasks/${idUser}`);
     let res = await response.json();
     setTasks(res.tasks);
 
     response = await fetch(
-      //`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/focusTimes/?id=${idUser}`
-      `${process.env.NEXT_PUBLIC_BASE_URL}api/tasks/focusTimes/`
+      `http://localhost:3000/api/tasks/focusTimes/${idUser}`
     );
     res = await response.json();
     setFocusTime(res.focusTime);
   }
-  
+
   useEffect(() => {
     getTasksData();
   }, [session]);
@@ -166,13 +164,12 @@ export default function TasksList() {
       });
 
       getTasksData();
-    }
-    else
-    console.log(
-      task.estado === "done"
-        ? "No se añade porque la tarea está terminada"
-        : `Tiempo de concentracion por debajo del minimo (${minTime}s)`
-    );
+    } else
+      console.log(
+        task.estado === "done"
+          ? "No se añade porque la tarea está terminada"
+          : `Tiempo de concentracion por debajo del minimo (${minTime}s)`
+      );
   }
 
   async function postTask(
@@ -197,9 +194,8 @@ export default function TasksList() {
         }),
       });
       getTasksData();
-    } 
-    else {
-      alert("Funcionalidad solo para usuarios registrados.")
+    } else {
+      alert("Funcionalidad solo para usuarios registrados.");
     }
   }
 
@@ -230,12 +226,11 @@ export default function TasksList() {
   }
 
   return (
-    <div className="bg-indigo-950 w-1/2">
+    <div className="bg1 fg1">
       <div className="card">
         <div className="card-body text-center flex flex-col justify-center space-x-10 p-10">
           <ul className="list-group ">
             {tasks.map(({ nameTarea, estado, descripcion, id }, index) => {
-
               return (
                 <li
                   style={{ textAlign: "left" }}
@@ -246,18 +241,27 @@ export default function TasksList() {
                   }
                   key={id}
                   onClick={() => {
-                    activeTask === id ? setActiveTask(-1) : setActiveTask(id)
+                    activeTask === id ? setActiveTask(-1) : setActiveTask(id);
                   }}
                 >
                   <dl>
                     <dt style={{ display: "block", float: "right" }}>
                       <small>Nombre de la Tarea</small>
                     </dt>
-                    <dd style={{ color : activeTask === id ? 'white' : 'limegreen', fontWeight : activeTask === id ? 'bold' : 'normal'}}>{nameTarea}</dd>
+                    <dd
+                      style={{
+                        color: activeTask === id ? "white" : "limegreen",
+                        fontWeight: activeTask === id ? "bold" : "normal",
+                      }}
+                    >
+                      {nameTarea}
+                    </dd>
                     <dt style={{ display: "block", float: "right" }}>
                       <small>Estado</small>
                     </dt>
-                    <dd style={{ color: activeTask === id ? 'white' : 'green' }}>
+                    <dd
+                      style={{ color: activeTask === id ? "white" : "green" }}
+                    >
                       {estado == "done"
                         ? "Finalizada"
                         : estado == "notStarted"
@@ -267,61 +271,80 @@ export default function TasksList() {
                     <dt style={{ display: "block", float: "right" }}>
                       <small>{activeTask == id ? "Descripcion" : ""}</small>
                     </dt>
-                    <dd style={{ color: activeTask === id ? 'lightgray' : 'gray' }}>
+                    <dd
+                      style={{
+                        color: activeTask === id ? "lightgray" : "gray",
+                      }}
+                    >
                       {activeTask == id ? descripcion || "Sin Descripcion" : ""}
                     </dd>
                     <dt style={{ display: "block", float: "right" }}>
                       <small>{activeTask == id ? "Tiempo dedicado" : ""}</small>
                     </dt>
-                    <dd style={{ color: "yellow",  fontWeight: "bold"}}>
+                    <dd style={{ color: "yellow", fontWeight: "bold" }}>
                       {getFocusTimeForTask(id)}
                     </dd>
                     <dt
-                      style={{ display: "block", float: "right", color: "orange" }}
+                      style={{
+                        display: "block",
+                        float: "right",
+                        color: "orange",
+                      }}
                     >
                       {activeTask == id && estado === "pending" ? (
                         <a
-                        href="#"
-                        className="text-white"
-                        style={{ textDecoration: "none" }}
-                        onClick={() => {
-                          updateTaskState(id, "done");
-                        }}
-                      >
-                        <div
-                          className="p-1 bg-info rounded text-center"
-                          style={{ width: "5rem", color: 'white'}}
+                          href="#"
+                          className="text-white"
+                          style={{ textDecoration: "none" }}
+                          onClick={() => {
+                            updateTaskState(id, "done");
+                          }}
                         >
-                          Finalizar
-                        </div>
-                      </a>
-                      ) : ("")}
+                          <div
+                            className="p-1 bg-info rounded text-center"
+                            style={{ width: "5rem", color: "white" }}
+                          >
+                            Finalizar
+                          </div>
+                        </a>
+                      ) : (
+                        ""
+                      )}
                     </dt>
-                    <dd style={{ color:"orange" }}>
+                    <dd style={{ color: "orange" }}>
                       {activeTask == id && estado === "pending" ? "-" : ""}
                     </dd>
                     <dt
-                      style={{ display: "block", float: "right", color: "red"}}
+                      style={{ display: "block", float: "right", color: "red" }}
                     >
                       {activeTask == id ? (
                         <a
-                        href="#"
-                        className="text-white"
-                        style={{ textDecoration: "none" }}
-                        onClick={() => {
-                          deleteTask(id)
-                        }}
-                      >
-                        <div
-                          className= {estado === 'done' ? "p-1 bg-info rounded text-center" : "p-1 rounded text-center"}
-                          style={{ width: "5rem", color: estado === 'done' ? 'white' : 'orange'}}
+                          href="#"
+                          className="text-white"
+                          style={{ textDecoration: "none" }}
+                          onClick={() => {
+                            deleteTask(id);
+                          }}
                         >
-                          Eliminar
-                        </div>
-                      </a>
-                      ) : ("")}
+                          <div
+                            className={
+                              estado === "done"
+                                ? "p-1 bg-info rounded text-center"
+                                : "p-1 rounded text-center"
+                            }
+                            style={{
+                              width: "5rem",
+                              color: estado === "done" ? "white" : "orange",
+                            }}
+                          >
+                            Eliminar
+                          </div>
+                        </a>
+                      ) : (
+                        ""
+                      )}
                     </dt>
-                    <dd style={{ color:"red" }}>
+                    <dd style={{ color: "red" }}>
                       {activeTask == id ? "-" : ""}
                     </dd>
                   </dl>
@@ -331,11 +354,12 @@ export default function TasksList() {
           </ul>
         </div>
         <div
-          className="card-footer text-center"
+          className="card-footer text-center bg1 fg1"
           onClick={() => {
             setActiveTask(-1);
           }}
         >
+          <TaskModal />
           <TaskForm onNewTask={postTask} />
         </div>
       </div>
