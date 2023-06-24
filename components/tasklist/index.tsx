@@ -38,7 +38,7 @@ export default function TasksList() {
 
   async function getTasksData() {
     //let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/?id=${idUser}`);
-    let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/`);
+    let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/`, );
     console.log(`url: ${process.env.NEXT_PUBLIC_BASE_URL}`)
     let res = await response.json();
     setTasks(res.tasks);
