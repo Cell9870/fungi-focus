@@ -1,10 +1,11 @@
 import React from "react";
+import Image from "next/image";
 
 export default function Register() {
   return (
     <div className="container w-75 mt-5 rounded rounded-2 shadow shadow-lg">
       <div className="row align-items-stretch">
-        <div className="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded rounded-2"></div>
+        <div className="col bgRegister d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded rounded-2"></div>
         <div className="col bg-white p-5 rounded-end">
           <div>
             <h3>Crear una cuenta</h3>
@@ -55,15 +56,18 @@ export default function Register() {
                 <label htmlFor="floatingPassword">Confirm Password</label>
               </div>
             </div>
-            <div className="d-grid">
-              <button
-                type="submit"
-                className="btn text-white mt-1 mb-2 p-2"
-                id="logInBtnConfirm"
-              >
-                Confirmar
-              </button>
-            </div>
+            <a href="/error404">
+              <div className="d-grid">
+                <button
+                  type="submit"
+                  className="btn text-white mt-1 mb-2 p-2"
+                  id="logInBtnConfirm"
+                >
+                  Confirmar
+                </button>
+              </div>
+            </a>
+
             <div className="my-1">
               <span>
                 ¿Ya tienes cuenta? <a href="/login">Inicia sesion</a>
@@ -78,46 +82,54 @@ export default function Register() {
             </div>
             <div className="row mt-2">
               <div className="col">
-                <button
-                  className="btn btn-outline w-100 my-1"
-                  style={{
-                    backgroundColor: "white",
-                    border: "1px solid rgb(79, 87, 86)",
-                  }}
-                >
-                  <div className="row align-items-center">
-                    <div className="col-2 d-none d-md-block">
-                      <img
-                        className="rounded rounded-3"
-                        src="/img/googleLogIn.png"
-                        width="32"
-                        alt=""
-                      ></img>
+                <a href="">
+                  <button
+                    className="btn btn-outline w-100 my-1"
+                    style={{
+                      backgroundColor: "white",
+                      border: "1px solid rgb(79, 87, 86)",
+                    }}
+                  >
+                    <div className="row align-items-center">
+                      <div className="col-2 d-none d-md-block">
+                        <Image
+                          className="rounded rounded-3"
+                          src="/../public/googleLogIn.png"
+                          height="32"
+                          width="32"
+                          alt=""
+                        />
+                      </div>
+                      <div className="col-12 col-md-10 text-center">Google</div>
                     </div>
-                    <div className="col-12 col-md-10 text-center">Google</div>
-                  </div>
-                </button>
+                  </button>
+                </a>
+
               </div>
               <div className="col">
-                <button
-                  className="btn btn-outline w-100 my-1"
-                  style={{
-                    backgroundColor: "white",
-                    border: "1px solid rgb(79, 87, 86)",
-                  }}
-                >
-                  <div className="row align-items-center">
-                    <div className="col-2 d-none d-md-block">
-                      <img
-                        className="rounded rounded-3"
-                        src="/img/facebookLogIn.png"
-                        width="32"
-                        alt=""
-                      ></img>
+                <a href="/error404">
+                  <button
+                    className="btn btn-outline w-100 my-1"
+                    style={{
+                      backgroundColor: "white",
+                      border: "1px solid rgb(79, 87, 86)",
+                    }}
+                  >
+                    <div className="row align-items-center">
+                      <div className="col-2 d-none d-md-block">
+                        <Image
+                          className="rounded rounded-3"
+                          src="/../public/facebookLogIn.png"
+                          height="32"
+                          width="32"
+                          alt=""
+                        />
+                      </div>
+                      <div className="col-12 col-md-10 text-center">Facebook</div>
                     </div>
-                    <div className="col-12 col-md-10 text-center">Facebook</div>
-                  </div>
-                </button>
+                  </button>
+                </a>
+
               </div>
             </div>
           </div>

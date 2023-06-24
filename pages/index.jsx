@@ -85,10 +85,13 @@ export default function Home() {
                   onClick={() => setTimer("pomodoro")}
                 >
                   <div
-                    className="p-2 bg-warning rounded text-center"
+                    className="p-2 rounded text-center"
                     style={{ width: "8rem" }}
                   >
-                    Pomodoro
+                    <button className="btn text-white btn-outline ">
+                      Pomodoro
+                    </button>
+
                   </div>
                 </a>
                 <a
@@ -98,10 +101,13 @@ export default function Home() {
                   onClick={() => setTimer("shortBreak")}
                 >
                   <div
-                    className="p-2 bg-dark text-white rounded text-center"
+                    className="p-2  rounded text-center"
                     style={{ width: "8rem" }}
                   >
-                    Short Break
+                    <button className="btn text-white btn-outline" style={{ backgroundColor: "#bd8159" }}>
+                      Short Break
+                    </button>
+
                   </div>
                 </a>
                 <a
@@ -111,10 +117,13 @@ export default function Home() {
                   onClick={() => setTimer("longBreak")}
                 >
                   <div
-                    className="p-2 bg-info rounded text-center"
+                    className="p-2 rounded text-center"
                     style={{ width: "8rem" }}
                   >
-                    Long Break
+                    <button className="btn text-white btn-outline" style={{ backgroundColor: "#3b6aa8" }}>
+                      Long Break
+                    </button>
+
                   </div>
                 </a>
                 <Modal durations={durations} setDurations={setDurations} />
@@ -129,7 +138,7 @@ export default function Home() {
               </div>
               <div className="d-flex align-items-center justify-content-center">
                 <button
-                  className="btn text-white mt-1 mb-2 p-2"
+                  className="btn text-white mt-1 mb-2 p-2 w-25"
                   onClick={() => {
                     setTimerActive(!timerActive);
                     setTimerState({

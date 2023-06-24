@@ -33,7 +33,7 @@ export default function Durations({ durations, setDurations }) {
 
   return (
     <>
-      <Button variant="primary" onClick={() => setShow(true)} className="btn">
+      <Button variant="secondary" onClick={() => setShow(true)} className="btn btn-outline" style={{ backgroundColor: "#65508f" }}>
         Tiempo Personalizado
       </Button>
 

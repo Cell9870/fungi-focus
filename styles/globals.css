@@ -51,24 +51,31 @@ body {
 .bg1 {
   background-color: var(--bg-1);
 }
+
 .bg2 {
   background-color: var(--bg-2);
 }
+
 .bg3 {
   background-color: var(--bg-3);
 }
+
 .bg4 {
   background-color: var(--bg-4);
 }
+
 .fg1 {
   color: var(--fg-1);
 }
+
 .fg2 {
   color: var(--fg-2);
 }
+
 .fg3 {
   color: var(--fg-3);
 }
+
 .fg4 {
   color: var(--fg-4);
 }
@@ -115,6 +122,19 @@ button.botonCerrar:hover {
 
 .bg {
   background-image: url(/staycool.jpg);
+  background-position: center center;
+  background-size: cover;
+}
+
+.bg404 {
+  background-color: white;
+  background-image: url(/404.png);
+  background-position: center center;
+  background-size: cover;
+}
+
+.bgRegister {
+  background-image: url(/letsgrow.jpg);
   background-position: center center;
   background-size: cover;
 }
