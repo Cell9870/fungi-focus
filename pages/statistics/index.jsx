@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Stats from "./stats";
 
 export default function Statistics() {
-  const [timeFrame, setTimeFrame] = useState("days");
+  const [timeFrame, setTimeFrame] = useState("day");
 
   return (
     <div className="container w-75 my-3 rounded rounded-2 shadow shadow-lg">
@@ -113,15 +113,20 @@ export default function Statistics() {
               <div className="row">
                 <div className="col-5">
                   <h5>Focus hours</h5>
-
                 </div>
                 <div className="col-7">
                   <div>
-                    <select id="hoursCharts" className="form-select" aria-label="Default select example" onChange={() => {
-                      let valorChart = document.getElementById('hoursCharts').value;
-                      console.log(valorChart);
-                      setTimeFrame(valorChart);
-                    }}>
+                    <select
+                      id="hoursCharts"
+                      className="form-select"
+                      aria-label="Default select example"
+                      onChange={() => {
+                        let valorChart =
+                          document.getElementById("hoursCharts").value;
+                        console.log(valorChart);
+                        setTimeFrame(valorChart);
+                      }}
+                    >
                       <option>Seleccione como ver sus estadisticas</option>
                       <option value="day">Dia</option>
                       <option value="week">Semana</option>
