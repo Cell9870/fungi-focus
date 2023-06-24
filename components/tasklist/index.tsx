@@ -38,14 +38,14 @@ export default function TasksList() {
 
   async function getTasksData() {
     //let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/?id=${idUser}`);
-    let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/`, );
+    let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/tasks/`, );
     console.log(`url: ${process.env.NEXT_PUBLIC_BASE_URL}`)
     let res = await response.json();
     setTasks(res.tasks);
 
     response = await fetch(
       //`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/focusTimes/?id=${idUser}`
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/focusTimes/`
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/tasks/focusTimes/`
     );
     res = await response.json();
     setFocusTime(res.focusTime);
@@ -150,7 +150,7 @@ export default function TasksList() {
 
     if (task.estado != "done" && concentracionTime > minTime) {
       if (task.estado === "notStarted") updateTaskState(idTarea, "pending");
-      const urlEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/focusTimes`;
+      const urlEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}api/tasks/focusTimes`;
       const response = await fetch(urlEndPoint, {
         method: "POST",
         headers: {
