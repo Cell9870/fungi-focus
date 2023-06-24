@@ -21,7 +21,7 @@ interface IFocusTime {
 }
 
 export default function TasksList() {
-  const { timerActive, timerState, baseUrl } = useGlobalContext();
+  const { timerActive, timerState } = useGlobalContext();
 
   const { data: session } = useSession();
   const idUser = session?.user?.email;
@@ -37,15 +37,15 @@ export default function TasksList() {
   const prevTimerStateRef = useRef<string>("pomodoro");
 
   async function getTasksData() {
-    //let response = await fetch(`${process.env.PUBLIC_URL}/api/tasks/?id=${idUser}`);
-    let response = await fetch(`${baseUrl}/api/tasks/`);
-    console.log(`url: ${process.env.PUBLIC_URL}, local: ${baseUrl}`)
+    //let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/?id=${idUser}`);
+    let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/`);
+    console.log(`url: ${process.env.NEXT_PUBLIC_BASE_URL}`)
     let res = await response.json();
     setTasks(res.tasks);
 
     response = await fetch(
-      //`${process.env.PUBLIC_URL}/api/tasks/focusTimes/?id=${idUser}`
-      `${process.env.PUBLIC_URL}/api/tasks/focusTimes/`
+      //`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/focusTimes/?id=${idUser}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/focusTimes/`
     );
     res = await response.json();
     setFocusTime(res.focusTime);
@@ -150,7 +150,7 @@ export default function TasksList() {
 
     if (task.estado != "done" && concentracionTime > minTime) {
       if (task.estado === "notStarted") updateTaskState(idTarea, "pending");
-      const urlEndPoint = `${process.env.PUBLIC_URL}/api/tasks/focusTimes`;
+      const urlEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/focusTimes`;
       const response = await fetch(urlEndPoint, {
         method: "POST",
         headers: {
@@ -182,7 +182,7 @@ export default function TasksList() {
   ) {
     if (session != null) {
       if (descripcion === undefined) descripcion = "";
-      const urlEndPoint = `${process.env.PUBLIC_URL}/api/tasks`;
+      const urlEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks`;
       const response = await fetch(urlEndPoint, {
         method: "POST",
         headers: {
@@ -204,7 +204,7 @@ export default function TasksList() {
   }
 
   async function updateTaskState(id: number, state: string) {
-    const urlEndPoint = `${process.env.PUBLIC_URL}/api/tasks`;
+    const urlEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks`;
     const response = await fetch(urlEndPoint, {
       method: "PATCH",
       headers: {
@@ -219,7 +219,7 @@ export default function TasksList() {
   }
 
   async function deleteTask(id: number) {
-    const urlEndPoint = `${process.env.PUBLIC_URL}/api/tasks/?id=${id}`;
+    const urlEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/?id=${id}`;
     const response = await fetch(urlEndPoint, {
       method: "DELETE",
       headers: {

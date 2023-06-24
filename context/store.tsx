@@ -26,7 +26,6 @@ interface ContextProps {
   setTimerState: Dispatch<SetStateAction<ITimerState>>;
   theme: string;
   setTheme: Dispatch<SetStateAction<string>>;
-  baseUrl: string
 }
 
 //valores iniciales
@@ -39,7 +38,6 @@ const GlobalContext = createContext<ContextProps>({
   },
   theme: "dark",
   setTheme: (): string => "dark",
-  baseUrl : process.env.PUBLIC_URL as string
 });
 
 export const GlobalContextProvider = ({ children }: any) => {
@@ -50,7 +48,6 @@ export const GlobalContextProvider = ({ children }: any) => {
     laps: 0,
   });
   const [theme, setTheme] = useState("dark");
-  const baseUrl = process.env.PUBLIC_URL as string
 
   return (
     <GlobalContext.Provider
@@ -61,7 +58,6 @@ export const GlobalContextProvider = ({ children }: any) => {
         setTimerState,
         theme,
         setTheme,
-        baseUrl
       }}
     >
       {children}
