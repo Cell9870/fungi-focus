@@ -148,7 +148,7 @@ export default function TasksList() {
 
     if (task.estado != "done" && concentracionTime > minTime) {
       if (task.estado === "notStarted") updateTaskState(idTarea, "pending");
-      const urlEndPoint = `http://localhost:3000/api/tasks/focusTimes`;
+      const urlEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}api/tasks/focusTimes`;
       const response = await fetch(urlEndPoint, {
         method: "POST",
         headers: {
@@ -179,7 +179,7 @@ export default function TasksList() {
   ) {
     if (session != null) {
       if (descripcion === undefined) descripcion = "";
-      const urlEndPoint = `http://localhost:3000/api/tasks`;
+      const urlEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks`;
       const response = await fetch(urlEndPoint, {
         method: "POST",
         headers: {
@@ -200,7 +200,7 @@ export default function TasksList() {
   }
 
   async function updateTaskState(id: number, state: string) {
-    const urlEndPoint = `http://localhost:3000/api/tasks`;
+    const urlEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks`;
     const response = await fetch(urlEndPoint, {
       method: "PATCH",
       headers: {
@@ -215,7 +215,7 @@ export default function TasksList() {
   }
 
   async function deleteTask(id: number) {
-    const urlEndPoint = `http://localhost:3000/api/tasks/?id=${id}`;
+    const urlEndPoint = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks/?id=${id}`;
     const response = await fetch(urlEndPoint, {
       method: "DELETE",
       headers: {
