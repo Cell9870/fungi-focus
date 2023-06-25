@@ -58,10 +58,10 @@ export default function Home() {
       laps: laps,
     });
   }
-  const isBrowser = () => typeof windows !== 'undefined'
+  const isBrowser = () => typeof windows !== 'undefined';
   function scrollToTop() {
-    if (!isBrowser) return
-    window.scrollTo({top:0, behavior:'smooth'})
+    if (!isBrowser) return;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   return (
@@ -143,7 +143,7 @@ export default function Home() {
               </div>
               <div className="d-flex align-items-center justify-content-center">
                 <button
-                  className="btn text-white mt-1 mb-2 p-2 w-25"
+                  className="btn text-white mt-1 mb-4 p-2 w-25"
                   onClick={() => {
                     setTimerActive(!timerActive);
                     setTimerState({
@@ -158,14 +158,14 @@ export default function Home() {
               </div>
               <Tasklist />
               <hr
-                className="mt-5 mx-auto rounded"
+                className="mx-auto rounded"
                 style={{ color: "#0c3e74", width: "80%" }}
               ></hr>
             </div>
           </div>
           <Info />
         </div>
-        <div className="d-grid">
+        <div className="w-50 mx-auto d-grid">
           <button
             type="submit"
             className="btn botonCerrar text-white mt-1 mb-2 p-2"
@@ -176,6 +176,6 @@ export default function Home() {
           </button>
         </div>
       </div>
-    </React.Fragment>
+    </React.Fragment >
   );
 }

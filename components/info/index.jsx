@@ -3,7 +3,7 @@ import React from "react";
 export default function FungiInfo() {
   return (
     <div className="container w-75">
-      <div className="text-center my-4">
+      <div className="text-center">
         <h5>Acerca de fungi focus</h5>
       </div>
       <div></div>

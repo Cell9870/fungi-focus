@@ -34,7 +34,7 @@ export default function Stats({ timeFrame }) {
       );
       let res = await response.json();
 
-      console.log(res);
+      /* console.log(res); */
       if (res.focusTime.length === 0) {
         return;
       }
@@ -46,7 +46,7 @@ export default function Stats({ timeFrame }) {
           datasets: [
             {
               label: ["Hours of study"],
-              data: new Array(offset + 1),
+              data: new Array((offset + 1)),
             },
           ],
           backgroundColor: [
@@ -82,6 +82,7 @@ export default function Stats({ timeFrame }) {
         data.data.datasets[0].data[i] = 0;
       }
       let date = new Date();
+
       for (let i = 0; i < offset + 1; i++) {
         data.data.labels[offset - i] = date.toLocaleDateString("es-US");
 
@@ -92,7 +93,6 @@ export default function Stats({ timeFrame }) {
               res.focusTime[j].concentracionTime;
           }
         }
-
         date.setDate(date.getDate() - 1);
       }
 

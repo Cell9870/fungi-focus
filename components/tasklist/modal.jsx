@@ -4,9 +4,13 @@ import { useState, useEffect, React } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import TaskForm from "./taskform";
 
-export default function TaskModal() {
+
+export default function TaskModal({ onNewTask }) {
   const [show, setShow] = useState(false);
+
+
 
   function discard() {
     setShow(false);
@@ -16,11 +20,13 @@ export default function TaskModal() {
   }
   return (
     <>
-      <Button variant="primary" onClick={() => setShow(true)} className="btn">
+      <Button variant="secondary" onClick={() => setShow(true)} className="btn btn-outline p-3">
+        Agregar nueva tarea
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="32"
           height="32"
+          style={{ marginLeft: "1rem" }}
           fill="currentColor"
           className="bi bi-plus-square"
           viewBox="0 0 16 16"
@@ -32,61 +38,18 @@ export default function TaskModal() {
 
       <Modal show={show} onHide={discard} className="mt-3">
         <Modal.Header closeButton>
-          <Modal.Title>Pomodoro Personalizado</Modal.Title>
+          <Modal.Title>Crear nueva tarea</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ¡Elija el tiempo de pomodoro y breaks que mas le convengan!
+          ¡Elija sus tareas personalizadas!
+
+          <div className="p-2 mb-4">
+            <TaskForm onNewTask={onNewTask} close={discard} />
+          </div>
+
         </Modal.Body>
 
-        <Form className="p-2">
-          <div className="form-floating mb-1">
-            <input
-              type="number"
-              className="form-control"
-              id="pomodoro"
-              placeholder="Enter time"
-              name="pomodoro"
-            ></input>
-            <label htmlFor="pomodoro">Pomodoro</label>
-          </div>
-          <div className="form-floating mb-3 mt-3">
-            <input
-              type="number"
-              className="form-control"
-              id="sbreak"
-              placeholder="Short Break"
-              name="sbreak"
-            ></input>
-            <label htmlFor="sbreak">Short Break</label>
-          </div>
-          <div className="form-floating mb-3 mt-3">
-            <input
-              type="number"
-              className="form-control"
-              id="lbreak"
-              placeholder="Long Break"
-              name="lbreak"
-            ></input>
-            <label htmlFor="lbreak">Long Break</label>
-          </div>
-        </Form>
 
-        <Modal.Footer>
-          <Button
-            className="btn btn-outline rounded"
-            variant="secondary"
-            onClick={discard}
-          >
-            Close
-          </Button>
-          <Button
-            className="btn btn-outline rounded"
-            variant="secondary"
-            onClick={save}
-          >
-            Save Changes
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

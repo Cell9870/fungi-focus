@@ -14,9 +14,11 @@ import { UseFormReturn, useForm } from "react-hook-form";
 
 interface TaskFormProps {
   onNewTask: (name: string, state: string, description?: string) => void;
+  close: () => void;
 }
 
-export default function TaskForm({ onNewTask }: TaskFormProps) {
+
+export default function TaskForm({ onNewTask, close }: TaskFormProps) {
   const { register, handleSubmit, reset }: UseFormReturn = useForm();
 
   const [state, setState] = useState("notStarted");
@@ -31,6 +33,7 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
     let _description: string = description;
 
     onNewTask(_name, _state, _description);
+    close();;
   };
 
   const handleStateChange = (event: SelectChangeEvent) => {
@@ -38,17 +41,18 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
   };
 
   return (
-    <Container component="main" maxWidth="md">
+    <Container>
       <Box>
         <Box component="form" onSubmit={handleSubmit(handleFormSubmit)}>
+          {/** GRILLA CON TASKNAME Y DESCRIPCION*/}
           <Grid
             container
             justifyContent={"left"}
             rowSpacing={1}
-            columns={4}
+            columns={2}
             columnSpacing={2}
-            rowGap={2}
-            columnGap={2}
+            rowGap={0}
+            columnGap={1}
           >
             <Grid item>
               <TextField
@@ -61,8 +65,7 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
                 variant="standard"
                 sx={{
                   input: { color: "black" },
-                  position: "relative",
-                  top: "49%",
+                  position: "relative"
                 }}
                 InputLabelProps={{ style: { color: "gray" } }}
               />
@@ -72,13 +75,24 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
                 {...register("description")}
                 label="Descripcion"
                 multiline
-                rows={3}
+                rows={0}
                 autoComplete="off"
                 variant="standard"
                 inputProps={{ style: { color: "black" } }}
                 InputLabelProps={{ style: { color: "gray" } }}
               />
             </Grid>
+          </Grid>
+          {/**GRID CON MENU Y BUTTON SUBMIT */}
+          <Grid
+            container
+            justifyContent={"left"}
+            rowSpacing={1}
+            columns={2}
+            columnSpacing={2}
+            rowGap={0}
+            columnGap={4}
+          >
             <Grid item>
               <InputLabel id="select-label"></InputLabel>
               <Select
@@ -96,7 +110,7 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
             <Grid item>
               <Button
                 type="submit"
-                sx={{ position: "relative", top: "55%", color: "cadetblue" }}
+                sx={{ position: "relative", top: "55%", left: "12%", color: "cadetblue" }}
                 variant="outlined"
               >
                 Añadir Nueva Tarea
@@ -105,6 +119,6 @@ export default function TaskForm({ onNewTask }: TaskFormProps) {
           </Grid>
         </Box>
       </Box>
-    </Container>
+    </Container >
   );
 }

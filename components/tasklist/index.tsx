@@ -80,6 +80,8 @@ export default function TasksList() {
       activeTask === prevTaskRef.current;
     let paused =
       !pomodoroActive &&
+      timerState.current == "pomodoro" &&
+      prevTimerStateRef.current == "pomodoro" &&
       prevTimerRef.current &&
       activeTask != -1 &&
       activeTask === prevTaskRef.current;
@@ -226,7 +228,8 @@ export default function TasksList() {
   }
 
   return (
-    <div className="bg1 fg1">
+
+    <div className="w-75 mx-auto bg1 fg1">
       <div className="card">
         <div className="card-body text-center flex flex-col justify-center space-x-10 p-10">
           <ul className="list-group ">
@@ -265,8 +268,8 @@ export default function TasksList() {
                       {estado == "done"
                         ? "Finalizada"
                         : estado == "notStarted"
-                        ? "No empezada"
-                        : "Pendiente"}
+                          ? "No empezada"
+                          : "Pendiente"}
                     </dd>
                     <dt style={{ display: "block", float: "right" }}>
                       <small>{activeTask == id ? "Descripcion" : ""}</small>
@@ -359,10 +362,11 @@ export default function TasksList() {
             setActiveTask(-1);
           }}
         >
-          <TaskModal />
-          <TaskForm onNewTask={postTask} />
+          <TaskModal onNewTask={postTask} />
         </div>
       </div>
     </div>
+
+
   );
 }
