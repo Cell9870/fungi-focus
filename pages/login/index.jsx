@@ -50,15 +50,19 @@ export default function LogIn() {
                 Recordar mi usuario
               </label>
             </div>
-            <div className="d-grid">
-              <button
-                type="submit"
-                className="btn text-white mt-1 mb-2 p-2"
-                id="logInBtnConfirm"
-              >
-                Confirmar
-              </button>
-            </div>
+
+            <a href="/error404" style={{ textDecoration: "none" }}>
+              <div className="d-grid">
+                <button
+                  type="submit"
+                  className="btn text-white mt-1 mb-2 p-2"
+                  id="logInBtnConfirm"
+                >
+                  Confirmar
+                </button> </div>
+            </a>
+
+
             <div className="my-1">
               <span>
                 ¿No tienes cuenta? <a href="/register">Registrate</a>
@@ -66,7 +70,7 @@ export default function LogIn() {
               <br></br>
               <span>
                 {" "}
-                <a href="#">Recuperar contraseña</a>
+                <a href="/error404">Recuperar contraseña</a>
               </span>
             </div>
           </form>
@@ -96,20 +100,23 @@ export default function LogIn() {
                 </button>
               </div>
               <div className="col">
-                <button className={styles.btn + " btn-outline w-100 my-1 p-2"}>
-                  <div className="row align-items-center">
-                    <div className="col-2 d-none d-md-block">
-                      <Image
-                        className="rounded rounded-3"
-                        src="/../public/facebookLogIn.png"
-                        width="32"
-                        height="32"
-                        alt=""
-                      />
+                <a href="/error404">
+                  <button className={styles.btn + " btn-outline w-100 my-1 p-2"}>
+                    <div className="row align-items-center">
+                      <div className="col-2 d-none d-md-block">
+                        <Image
+                          className="rounded rounded-3"
+                          src="/../public/facebookLogIn.png"
+                          width="32"
+                          height="32"
+                          alt=""
+                        />
+                      </div>
+                      <div className="col-12 col-md-10 text-center">Facebook</div>
                     </div>
-                    <div className="col-12 col-md-10 text-center">Facebook</div>
-                  </div>
-                </button>
+                  </button>
+                </a>
+
               </div>
             </div>
           </div>

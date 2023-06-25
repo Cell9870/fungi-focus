@@ -50,8 +50,8 @@ export default function CircleTimer({
       <svg width="0" height="0">
         <defs>
           <linearGradient id="blue-cyan" x1="2" y1="2" x2="0" y2="0">
-            <stop offset={"25%"} stopColor="blue" />
-            <stop offset={"95%"} stopColor="cyan" />
+            <stop offset={"25%"} stopColor="#5d6b9e" />
+            <stop offset={"95%"} stopColor="#49758a" />
           </linearGradient>
         </defs>
       </svg>

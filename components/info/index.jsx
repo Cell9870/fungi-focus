@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function FungiInfo(){
+export default function FungiInfo() {
   return (
     <div className="container w-75">
       <div className="text-center my-4">
@@ -13,7 +13,7 @@ export default function FungiInfo(){
       <hr
         className="rounded"
         style={{
-          color: "#0c3e74",
+          color: "#ffa751",
           border: "0.17rem solid",
           width: "5%",
         }}
@@ -38,7 +38,7 @@ export default function FungiInfo(){
         <hr
           className="rounded"
           style={{
-            color: "#0c3e74",
+            color: "#ffa751",
             border: "0.17rem solid",
             width: "5%",
           }}
@@ -66,7 +66,7 @@ export default function FungiInfo(){
         <hr
           className="rounded"
           style={{
-            color: "#0c3e74",
+            color: "#ffa751",
             border: "0.17rem solid",
             width: "5%",
           }}
@@ -100,7 +100,7 @@ export default function FungiInfo(){
         <hr
           className="rounded"
           style={{
-            color: "#0c3e74",
+            color: "#ffa751",
             border: "0.17rem solid",
             width: "5%",
           }}
@@ -122,7 +122,7 @@ export default function FungiInfo(){
         <hr
           className="rounded"
           style={{
-            color: "#0c3e74",
+            color: "#ffa751",
             border: "0.17rem solid",
             width: "5%",
           }}
@@ -138,7 +138,7 @@ export default function FungiInfo(){
         <hr
           className="rounded"
           style={{
-            color: "#0c3e74",
+            color: "#ffa751",
             border: "0.17rem solid",
             width: "5%",
           }}
