@@ -183,8 +183,8 @@ export default function Navbar() {
         <li className={styles.nav_item}>
           <a
             className={styles.nav_link}
-            href={session ? "/" : "/login"}
-            onClick={() => (session ? signOut() : {})}
+            href={session ? "http://localhost:3000/api/auth/signout" : "/login"}
+          /* onClick={() => (session ? signOut() : {})} */
           >
             <svg
               aria-hidden="true"

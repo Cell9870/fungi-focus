@@ -16,11 +16,11 @@ body {
 
 /* temas alternativos */
 .dark {
-  --fg-1: #dad9d9;
+  --fg-1: #000000;
   --fg-2: #cacaca;
   --fg-3: #c4c4c4;
   --fg-4: #b6b6b6;
-  --bg-1: #333341;
+  --bg-1: #ffffff;
   --bg-2: #27272e;
   --bg-3: #1c1c21;
   --bg-4: #141418;

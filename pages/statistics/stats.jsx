@@ -1,11 +1,12 @@
-import { useEffect, React } from "react";
+import { useEffect, React, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Chart } from "chart.js/auto";
 
 let canvas;
 
-export default function Stats({ timeFrame }) {
+export default function Stats({ timeFrame, setTime }) {
   const { data: session, status } = useSession();
+  const [hasData, setHasData] = useState(false);
 
   function createChart(data) {
     let ctx = document.getElementById("myChart").getContext("2d");
@@ -14,6 +15,43 @@ export default function Stats({ timeFrame }) {
   }
 
   useEffect(() => {
+    async function getTotalHours() {
+      let idUser = session ? session.user.email : "0";
+      let response = await fetch(
+        `http://localhost:3000/api/tasks/focusTimes/${idUser}`
+      );
+      let res = await response.json();
+
+      if (res.focusTime.length === 0) {
+        return;
+      }
+
+      let totalHours = res.focusTime[0].concentracionTime;
+      let days = 1;
+      let streak = 1;
+      let fecha = new Date(Date.parse(res.focusTime[0].horaAndFecha));
+      for (let j = 1; j < res.focusTime.length; j++) {
+        let current = new Date(Date.parse(res.focusTime[j].horaAndFecha));
+
+        if (fecha.getDate() != current.getDate()) {
+          days += 1;
+          streak += 1;
+          fecha = current;
+        }
+
+        if (Math.floor((fecha.getDate() - current.getDate()) / (1000 * 60 * 60 * 24)) > 1) {
+          streak = 1;
+        }
+
+        totalHours += res.focusTime[j].concentracionTime;
+      }
+
+      setTime({
+        hours: totalHours,
+        days,
+        streak,
+      });
+    }
     async function getDataForCharts() {
       let offset;
       switch (timeFrame) {
@@ -36,6 +74,7 @@ export default function Stats({ timeFrame }) {
 
       /* console.log(res); */
       if (res.focusTime.length === 0) {
+        setHasData(false);
         return;
       }
 
@@ -46,7 +85,7 @@ export default function Stats({ timeFrame }) {
           datasets: [
             {
               label: ["Hours of study"],
-              data: new Array((offset + 1)),
+              data: new Array(offset + 1),
             },
           ],
           backgroundColor: [
@@ -88,6 +127,7 @@ export default function Stats({ timeFrame }) {
 
         for (let j = 0; j < res.focusTime.length; j++) {
           let current = new Date(Date.parse(res.focusTime[j].horaAndFecha));
+
           if (current.getDate() == date.getDate()) {
             data.data.datasets[0].data[offset - i] +=
               res.focusTime[j].concentracionTime;
@@ -95,6 +135,7 @@ export default function Stats({ timeFrame }) {
         }
         date.setDate(date.getDate() - 1);
       }
+      setHasData(true);
 
       try {
         createChart(data);
@@ -105,6 +146,7 @@ export default function Stats({ timeFrame }) {
         }
       }
     }
+    getTotalHours();
     getDataForCharts();
   }, [timeFrame, session]);
 
@@ -116,5 +158,10 @@ export default function Stats({ timeFrame }) {
     return <div>Sorry, you need an acount for statistics</div>;
   }
 
-  return <canvas id="myChart"></canvas>;
+  return (
+    <>
+      <canvas hidden={!hasData} id="myChart"></canvas>
+      <div hidden={hasData}>No data for the selected time period</div>
+    </>
+  );
 }

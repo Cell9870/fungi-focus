@@ -3,6 +3,11 @@ import Stats from "./stats";
 
 export default function Statistics() {
   const [timeFrame, setTimeFrame] = useState("day");
+  const [time, setTime] = useState({
+    days: 0,
+    hours: 0,
+    streak: 0,
+  });
 
   return (
     <div className="container w-75 my-3 rounded rounded-2 shadow shadow-lg">
@@ -42,7 +47,7 @@ export default function Statistics() {
             <h5>Resumen de actividad</h5>
             <span>This report will be able when you are logged in</span>
             <div className="row text-center my-4">
-              <div className="col-3 container shadow rounded p-2 statPersonalize">
+              <div className="col-3 container shadow rounded p-2 statPersonalize" style={{ backgroundColor: "rgba(54, 162, 235, 0.2)" }}>
                 <div className="row">
                   <div className="col-4 mt-2">
                     <svg
@@ -58,12 +63,12 @@ export default function Statistics() {
                     </svg>
                   </div>
                   <div className="col-8">
-                    <div>-- aca irian los dias</div>
+                    <div>- {time.hours} -</div>
                     <div>horas focus</div>
                   </div>
                 </div>
               </div>
-              <div className="col-3 container shadow rounded p-2 statPersonalize">
+              <div className="col-3 container shadow rounded p-2 statPersonalize" style={{ backgroundColor: "rgba(54, 162, 235, 0.2)" }}>
                 <div className="row">
                   <div className="col-4 mt-2">
                     <svg
@@ -79,12 +84,12 @@ export default function Statistics() {
                     </svg>
                   </div>
                   <div className="col-8">
-                    <div>-- aca irian los dias</div>
+                    <div>- {time.days} -</div>
                     <div>dias fungi mode</div>
                   </div>
                 </div>
               </div>
-              <div className="col-3 container shadow rounded p-2 statPersonalize">
+              <div className="col-3 container shadow rounded p-2 statPersonalize" style={{ backgroundColor: "rgba(54, 162, 235, 0.2)" }}>
                 <div className="row">
                   <div className="col-4 mt-2">
                     <svg
@@ -98,9 +103,9 @@ export default function Statistics() {
                       <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15Z" />
                     </svg>
                   </div>
-                  <div className="col-8">
-                    <div>-- aca irian los dias</div>
-                    <div>record</div>
+                  <div className="col-8" >
+                    <div>- {time.streak} -</div>
+                    <div>days in streak</div>
                   </div>
                 </div>
               </div>
@@ -142,9 +147,9 @@ export default function Statistics() {
                 </div>
               </div>
               <div className="container p-4 w-75">
-                <Stats timeFrame={timeFrame} />
-                <button>Anterior</button>
-                <button>Siguiente</button>
+                <Stats timeFrame={timeFrame} setTime={setTime} />
+                {/* <button>Anterior</button>
+                <button>Siguiente</button> */}
               </div>
             </div>
           </div>
